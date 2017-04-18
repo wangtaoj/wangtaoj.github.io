@@ -98,9 +98,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="tabu search">
 <meta property="og:url" content="http://yoursite.com/2017/04/18/tabu/index.html">
-<meta property="og:site_name" content="MyBlog">
+<meta property="og:site_name" content="Waston's Blog">
 <meta property="og:description" content="禁忌搜索算法定义禁忌搜索(tabu search)由Fred Glover在1986年首次提出，它是局部邻域搜索算法的推广，模拟人类具有记忆功能的寻优特征，通过局部邻域搜索机制和相应的禁忌准则来避免迂回搜索，并通过破禁水平来释放一些被禁忌的优良状态，进而保证多样化的有效搜索，最终实现全局优化，达到跳出局部最优解的目的。">
-<meta property="og:updated_time" content="2017-04-18T15:36:07.261Z">
+<meta property="og:updated_time" content="2017-04-18T15:47:27.626Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tabu search">
 <meta name="twitter:description" content="禁忌搜索算法定义禁忌搜索(tabu search)由Fred Glover在1986年首次提出，它是局部邻域搜索算法的推广，模拟人类具有记忆功能的寻优特征，通过局部邻域搜索机制和相应的禁忌准则来避免迂回搜索，并通过破禁水平来释放一些被禁忌的优良状态，进而保证多样化的有效搜索，最终实现全局优化，达到跳出局部最优解的目的。">
@@ -137,7 +137,7 @@
 
 
 
-  <title> tabu search | MyBlog </title>
+  <title> tabu search | Waston's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -173,7 +173,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">MyBlog</span>
+        <span class="site-title">Waston's Blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -265,7 +265,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MyBlog">
+      <meta itemprop="name" content="Waston's Blog">
     </span>
 
     
@@ -347,6 +347,8 @@
 <li>终止规则：保证算法具有优良的优化性能和时间性能，可以(1)确定步数终止，无法保证解的效果，应记录当前最优解；(2)频率控制原则，当某一个解、目标值或元素序列的频率超过一个给定值时，终止计算；(3)目标控制原则，如果在一个给定步数内，当前最优值没有变化，可终止计算。</li>
 </ul>
 <h3 id="具体代码片段"><a href="#具体代码片段" class="headerlink" title="具体代码片段"></a>具体代码片段</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">// 禁忌搜索</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">tabu</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="comment">//初始化操作</span></div><div class="line">	bestSolution = <span class="keyword">new</span> <span class="keyword">int</span>[k];<span class="comment">//全局最优</span></div><div class="line">	currentSolution = <span class="keyword">new</span> <span class="keyword">int</span>[k];<span class="comment">//当前解</span></div><div class="line">	localSolution = <span class="keyword">new</span> <span class="keyword">int</span>[k];<span class="comment">//局部最优</span></div><div class="line">	tabuList = <span class="keyword">new</span> <span class="keyword">int</span>[LEN][k];<span class="comment">//禁忌表</span></div><div class="line">	areaSolution = <span class="keyword">new</span> <span class="keyword">int</span>[k];<span class="comment">//邻域解</span></div><div class="line"></div><div class="line">	<span class="comment">//先随机生成一个解决方案</span></div><div class="line">	initSolution(currentSolution);</div><div class="line">	<span class="keyword">int</span> maxWeight = calWeight(currentSolution);<span class="comment">//最大值</span></div><div class="line">	copyArray(currentSolution,bestSolution);</div><div class="line"></div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> t = <span class="number">1</span>; t &lt;= iteratorTime; t++)&#123;</div><div class="line">		<span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">		<span class="keyword">int</span> localWeight = <span class="number">0</span>;</div><div class="line">		<span class="keyword">while</span>(count &lt;= NUM)&#123;</div><div class="line">			getSolutionFromArea(currentSolution, areaSolution);</div><div class="line">			<span class="comment">//该方案不在禁忌表中</span></div><div class="line">			<span class="keyword">if</span>(!isExist(areaSolution))&#123;</div><div class="line">				<span class="keyword">int</span> tempWeight = calWeight(areaSolution);</div><div class="line">				<span class="keyword">if</span>(tempWeight &gt; localWeight)&#123;</div><div class="line">					localWeight = tempWeight;</div><div class="line">					copyArray(areaSolution,localSolution);</div><div class="line">				&#125;</div><div class="line">				count++;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span>(localWeight &gt; maxWeight)&#123;</div><div class="line">			copyArray(localSolution,bestSolution);</div><div class="line">			maxWeight = localWeight;</div><div class="line">		&#125;</div><div class="line">		copyArray(localSolution, currentSolution);<span class="comment">//将这个邻域类最优解作为当前解</span></div><div class="line">		addList(localSolution);<span class="comment">//将这个邻域最优解加入到禁忌表,表示已经搜索过</span></div><div class="line">		</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<p>参考:<br><br><a href="http://www.wangxianfeng.name/2012/08/intelligent-optimization-algorithms-tabu-search/" target="_blank" rel="external">I’m WANG Xianfeng</a><br><br><a href="http://blog.csdn.net/wangqiuyun/article/details/8816463" target="_blank" rel="external">wangqiuyun</a></p>
+
       
     </div>
 

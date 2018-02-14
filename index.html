@@ -256,6 +256,136 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/14/mysqlDateFun/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="waston">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Waston's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/02/14/mysqlDateFun/" itemprop="url">
+                  mysql日期函数使用总结
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-14T22:54:00+08:00">
+                2018-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="获取函数"><a href="#获取函数" class="headerlink" title="获取函数"></a>获取函数</h3><p>mysql默认的时间格式: yyyy-MM-dd 或者 yyyy-MM-dd HH:mm:ss <br><br><br><strong>1. Date()</strong> <br><br>返回日期部分, date(‘2018-02-14 17:03:04’) = ‘2018-02-14’</p>
+<p><strong>2. Time()</strong> <br><br>返回时间部分, time(‘2018-02-14 17:03:04’) = ‘17:03:04’</p>
+<p><strong>3. CurDate()</strong> <br><br>返回当前时间的日期部分</p>
+<p><strong>4. CurTime()</strong> <br><br>返回当前时间的时间部分</p>
+<p><strong>5. now()</strong> <br><br>代表当前时间, 包含日期+时间</p>
+<p><strong>6. Year(), Month(), Day(), Hour(), Minute(), Second()</strong> <br><br>返回一个指定日期的年, 月, 天, 小时, 分钟, 秒数<br><br>整型格式, 参数为一个指定的时间</p>
+<p><strong>7. DayOfWeek()</strong><br>返回一个指定日期这一天是该周的第几天, 整型格式<br><br>注意: 星期日是第一天, 依次类推.</p>
+<h3 id="计算函数"><a href="#计算函数" class="headerlink" title="计算函数"></a>计算函数</h3><p><strong>1. DateDiff(‘’, ‘’)</strong> <br><br>参数: 两个时间 <br><br>返回: 返回两个时间的日期的差值,整型数据。代表两个参数时间隔了多少天 <br><br>如 datediff(‘2018-02-14 17:03:04’, ‘2018-02-13 18:23:12’) = 1</p>
+<p><strong>2.AddDate(‘’, interval expr type) || AddDate(‘’, days)</strong> <br><br>往指定的类型增加(加一天, 年, 月, 小时, 分钟, 秒等) <br><br>type: year, month, day, hour, minute, second等 <br><br>例如: <br><br>adddate(‘2018-02-14 17:03:04’, 2) = ‘2018-02-16 17:03:04’<br><br>adddate(‘2018-02-14 17:03:04’, -2) = ‘2018-02-12 17:03:04’ <br><br>adddate(‘2018-02-14 17:03:04’, interval -1 year) = ‘2017-02-14 17:03:04’</p>
+<p><strong>3.date_add(‘’, interval expr type)</strong> <br><br>用法与AddDate()类似. </p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/02/clone/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -619,131 +749,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/25/thred1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="waston">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Waston's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/25/thred1/" itemprop="url">
-                  Thread常用API
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T22:49:50+08:00">
-                2017-04-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h3><p>进程是受操作系统管理的基本运行单元,线程可以理解为进程中独立运行的一个子任务。<br>进程中至少包含一个线程。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/04/25/thred1/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -793,7 +798,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -806,7 +811,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

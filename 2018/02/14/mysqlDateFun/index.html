@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="git," />
+  <meta name="keywords" content="mysql," />
 
 
 
@@ -93,17 +93,17 @@
 
 
 
-<meta name="description" content="查看git所有配置信息1git config --list or git config -l">
-<meta name="keywords" content="git">
+<meta name="description" content="获取函数mysql默认的时间格式: yyyy-MM-dd 或者 yyyy-MM-dd HH:mm:ss 1. Date() 返回日期部分, date(‘2018-02-14 17:03:04’) = ‘2018-02-14’ 2. Time() 返回时间部分, time(‘2018-02-14 17:03:04’) = ‘17:03:04’ 3. CurDate() 返回当前时间的日期部分 4.">
+<meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="git常用命令学习总结">
-<meta property="og:url" content="http://yoursite.com/2017/04/13/git/index.html">
+<meta property="og:title" content="mysql日期函数使用总结">
+<meta property="og:url" content="http://yoursite.com/2018/02/14/mysqlDateFun/index.html">
 <meta property="og:site_name" content="Waston's Blog">
-<meta property="og:description" content="查看git所有配置信息1git config --list or git config -l">
-<meta property="og:updated_time" content="2017-04-13T10:04:54.800Z">
+<meta property="og:description" content="获取函数mysql默认的时间格式: yyyy-MM-dd 或者 yyyy-MM-dd HH:mm:ss 1. Date() 返回日期部分, date(‘2018-02-14 17:03:04’) = ‘2018-02-14’ 2. Time() 返回时间部分, time(‘2018-02-14 17:03:04’) = ‘17:03:04’ 3. CurDate() 返回当前时间的日期部分 4.">
+<meta property="og:updated_time" content="2018-02-14T15:51:43.934Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="git常用命令学习总结">
-<meta name="twitter:description" content="查看git所有配置信息1git config --list or git config -l">
+<meta name="twitter:title" content="mysql日期函数使用总结">
+<meta name="twitter:description" content="获取函数mysql默认的时间格式: yyyy-MM-dd 或者 yyyy-MM-dd HH:mm:ss 1. Date() 返回日期部分, date(‘2018-02-14 17:03:04’) = ‘2018-02-14’ 2. Time() 返回时间部分, time(‘2018-02-14 17:03:04’) = ‘17:03:04’ 3. CurDate() 返回当前时间的日期部分 4.">
 
 
 
@@ -131,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/04/13/git/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/02/14/mysqlDateFun/"/>
 
 
 
 
 
-  <title> git常用命令学习总结 | Waston's Blog </title>
+  <title> mysql日期函数使用总结 | Waston's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -256,7 +256,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/13/git/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/14/mysqlDateFun/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="waston">
@@ -277,7 +277,7 @@
             
             
               
-                git常用命令学习总结
+                mysql日期函数使用总结
               
             
           </h1>
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-13T17:04:24+08:00">
-                2017-04-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-14T22:54:00+08:00">
+                2018-02-14
               </time>
             
 
@@ -311,7 +311,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2017/04/13/git/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2018/02/14/mysqlDateFun/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -338,20 +338,16 @@
       
 
       
-        <h3 id="查看git所有配置信息"><a href="#查看git所有配置信息" class="headerlink" title="查看git所有配置信息"></a>查看git所有配置信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git config --list or git config <span class="_">-l</span></div></pre></td></tr></table></figure>
-<a id="more"></a>
-<h3 id="配置个人用户名称以及邮箱"><a href="#配置个人用户名称以及邮箱" class="headerlink" title="配置个人用户名称以及邮箱"></a>配置个人用户名称以及邮箱</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git config --global user.name <span class="string">"waston1997"</span></div><div class="line">git config --global user.email 2434687093@qq.com</div></pre></td></tr></table></figure>
-<p>说明: 每次git提交时都会引用这两条信息，说明是谁提交了更新，就是一个身份。–global是一个全局的配置，如果想要在别的仓库设置一个身份去掉global即可。</p>
-<h3 id="初始化一个仓库"><a href="#初始化一个仓库" class="headerlink" title="初始化一个仓库"></a>初始化一个仓库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git init</div></pre></td></tr></table></figure>
-<p>说明: 使用该命令把目录变成一个git可以管理的仓库,使用该命令后该目录会多出一个<br>   .git文件夹，用来跟踪管理版本库的</p>
-<h3 id="将指定文件添加到暂存区"><a href="#将指定文件添加到暂存区" class="headerlink" title="将指定文件添加到暂存区"></a>将指定文件添加到暂存区</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git add</div></pre></td></tr></table></figure>
-<p>说明: git add git.md把该文件添加到仓库暂存区中<br><br>git add . 通配符表示, 添加文件下的所有文件</p>
-<h3 id="将暂存区中的内容提交到仓库"><a href="#将暂存区中的内容提交到仓库" class="headerlink" title="将暂存区中的内容提交到仓库"></a>将暂存区中的内容提交到仓库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git commit -m <span class="string">"write a markdown file"</span></div></pre></td></tr></table></figure>
-<p>说明: 告诉git,把add后的文件提交到仓库中 -m 后是一个参数,一个说明性文字</p>
-<h3 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git remote add origin git@github.com:waston1997/first.git <span class="comment">#关联远程仓库</span></div><div class="line">git push -u origin master  <span class="comment">#将本地仓库内容推送到远程仓库中 </span></div><div class="line">git <span class="built_in">clone</span> git@github.com:waston1997/test.git** <span class="comment">#从远程仓库中克隆到本地仓库</span></div></pre></td></tr></table></figure>
-<p>说明: 第一次需要加-u,后面就不用了,直接**git push origin master;<br><br>细节:关于地址git@github.com:waston1997/first.git 用的是ssh协议</p>
-<h3 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">log</span> <span class="comment">#显示最近到最远的提交日志</span></div><div class="line">git reset --hard HEAD^  <span class="comment">#回退到前一个版本</span></div><div class="line">git reset --hard commitID <span class="comment">#进入到该次提交ID的版本</span></div><div class="line">git reflog <span class="comment">#查看命令历史，以便确定要回到未来的哪个版本。</span></div></pre></td></tr></table></figure>
-<p>说明: HEAD代表当前版本 HEAD^代表上一个版本 HEAD^^代表上上个版本<br>依次类推。也可以写成HEAD~1 HEAD~2。</p>
+        <h3 id="获取函数"><a href="#获取函数" class="headerlink" title="获取函数"></a>获取函数</h3><p>mysql默认的时间格式: yyyy-MM-dd 或者 yyyy-MM-dd HH:mm:ss <br><br><br><strong>1. Date()</strong> <br><br>返回日期部分, date(‘2018-02-14 17:03:04’) = ‘2018-02-14’</p>
+<p><strong>2. Time()</strong> <br><br>返回时间部分, time(‘2018-02-14 17:03:04’) = ‘17:03:04’</p>
+<p><strong>3. CurDate()</strong> <br><br>返回当前时间的日期部分</p>
+<p><strong>4. CurTime()</strong> <br><br>返回当前时间的时间部分</p>
+<p><strong>5. now()</strong> <br><br>代表当前时间, 包含日期+时间</p>
+<p><strong>6. Year(), Month(), Day(), Hour(), Minute(), Second()</strong> <br><br>返回一个指定日期的年, 月, 天, 小时, 分钟, 秒数<br><br>整型格式, 参数为一个指定的时间</p>
+<p><strong>7. DayOfWeek()</strong><br>返回一个指定日期这一天是该周的第几天, 整型格式<br><br>注意: 星期日是第一天, 依次类推.</p>
+<h3 id="计算函数"><a href="#计算函数" class="headerlink" title="计算函数"></a>计算函数</h3><p><strong>1. DateDiff(‘’, ‘’)</strong> <br><br>参数: 两个时间 <br><br>返回: 返回两个时间的日期的差值,整型数据。代表两个参数时间隔了多少天 <br><br>如 datediff(‘2018-02-14 17:03:04’, ‘2018-02-13 18:23:12’) = 1</p>
+<p><strong>2.AddDate(‘’, interval expr type) || AddDate(‘’, days)</strong> <br><br>往指定的类型增加(加一天, 年, 月, 小时, 分钟, 秒等) <br><br>type: year, month, day, hour, minute, second等 <br><br>例如: <br><br>adddate(‘2018-02-14 17:03:04’, 2) = ‘2018-02-16 17:03:04’<br><br>adddate(‘2018-02-14 17:03:04’, -2) = ‘2018-02-12 17:03:04’ <br><br>adddate(‘2018-02-14 17:03:04’, interval -1 year) = ‘2017-02-14 17:03:04’</p>
+<p><strong>3.date_add(‘’, interval expr type)</strong> <br><br>用法与AddDate()类似. </p>
 
       
     </div>
@@ -381,7 +377,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/git/" rel="tag"># git</a>
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
           
         </div>
       
@@ -394,18 +390,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/18/tabu/" rel="next" title="tabu search">
-                <i class="fa fa-chevron-left"></i> tabu search
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/11/hello-world/" rel="prev" title="hexo常用命令">
-                hexo常用命令 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/05/02/clone/" rel="prev" title="浅谈java克隆">
+                浅谈java克隆 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -568,7 +560,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看git所有配置信息"><span class="nav-number">1.</span> <span class="nav-text">查看git所有配置信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置个人用户名称以及邮箱"><span class="nav-number">2.</span> <span class="nav-text">配置个人用户名称以及邮箱</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化一个仓库"><span class="nav-number">3.</span> <span class="nav-text">初始化一个仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将指定文件添加到暂存区"><span class="nav-number">4.</span> <span class="nav-text">将指定文件添加到暂存区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将暂存区中的内容提交到仓库"><span class="nav-number">5.</span> <span class="nav-text">将暂存区中的内容提交到仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#远程仓库"><span class="nav-number">6.</span> <span class="nav-text">远程仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#版本回退"><span class="nav-number">7.</span> <span class="nav-text">版本回退</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取函数"><span class="nav-number">1.</span> <span class="nav-text">获取函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算函数"><span class="nav-number">2.</span> <span class="nav-text">计算函数</span></a></li></ol></div>
             
 
           </div>

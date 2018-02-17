@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="随机算法," />
+  <meta name="keywords" content="mysql," />
 
 
 
@@ -93,17 +93,17 @@
 
 
 
-<meta name="description" content="禁忌搜索算法定义禁忌搜索(tabu search)由Fred Glover在1986年首次提出，它是局部邻域搜索算法的推广，模拟人类具有记忆功能的寻优特征，通过局部邻域搜索机制和相应的禁忌准则来避免迂回搜索，并通过破禁水平来释放一些被禁忌的优良状态，进而保证多样化的有效搜索，最终实现全局优化，达到跳出局部最优解的目的。">
-<meta name="keywords" content="随机算法">
+<meta name="description" content="mysql的表锁和行锁表锁(table lock)表锁是mysql中最基本的所策略, 开销最小。会锁定整张表, 一个用户对表进行写操作前需要先获取写锁, 这会阻塞其它用户对该表的读写操作。在没有写锁的情况下, 用户可以获取读锁, 读锁之间是不互斥的, 也就是说多个用户可以同时加读锁, 但是不能加写锁。总结下来也就是写写互斥, 写读互斥, 读写互斥, 读读共享。因此读锁也称共享锁, 写锁称为排它锁。">
+<meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="tabu search">
-<meta property="og:url" content="http://yoursite.com/2017/04/18/tabu/index.html">
+<meta property="og:title" content="mysql事务学习笔记">
+<meta property="og:url" content="http://yoursite.com/2018/02/15/mysqlTranscation/index.html">
 <meta property="og:site_name" content="Waston's Blog">
-<meta property="og:description" content="禁忌搜索算法定义禁忌搜索(tabu search)由Fred Glover在1986年首次提出，它是局部邻域搜索算法的推广，模拟人类具有记忆功能的寻优特征，通过局部邻域搜索机制和相应的禁忌准则来避免迂回搜索，并通过破禁水平来释放一些被禁忌的优良状态，进而保证多样化的有效搜索，最终实现全局优化，达到跳出局部最优解的目的。">
-<meta property="og:updated_time" content="2017-04-18T15:47:27.626Z">
+<meta property="og:description" content="mysql的表锁和行锁表锁(table lock)表锁是mysql中最基本的所策略, 开销最小。会锁定整张表, 一个用户对表进行写操作前需要先获取写锁, 这会阻塞其它用户对该表的读写操作。在没有写锁的情况下, 用户可以获取读锁, 读锁之间是不互斥的, 也就是说多个用户可以同时加读锁, 但是不能加写锁。总结下来也就是写写互斥, 写读互斥, 读写互斥, 读读共享。因此读锁也称共享锁, 写锁称为排它锁。">
+<meta property="og:updated_time" content="2018-02-17T14:21:53.434Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tabu search">
-<meta name="twitter:description" content="禁忌搜索算法定义禁忌搜索(tabu search)由Fred Glover在1986年首次提出，它是局部邻域搜索算法的推广，模拟人类具有记忆功能的寻优特征，通过局部邻域搜索机制和相应的禁忌准则来避免迂回搜索，并通过破禁水平来释放一些被禁忌的优良状态，进而保证多样化的有效搜索，最终实现全局优化，达到跳出局部最优解的目的。">
+<meta name="twitter:title" content="mysql事务学习笔记">
+<meta name="twitter:description" content="mysql的表锁和行锁表锁(table lock)表锁是mysql中最基本的所策略, 开销最小。会锁定整张表, 一个用户对表进行写操作前需要先获取写锁, 这会阻塞其它用户对该表的读写操作。在没有写锁的情况下, 用户可以获取读锁, 读锁之间是不互斥的, 也就是说多个用户可以同时加读锁, 但是不能加写锁。总结下来也就是写写互斥, 写读互斥, 读写互斥, 读读共享。因此读锁也称共享锁, 写锁称为排它锁。">
 
 
 
@@ -131,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/04/18/tabu/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/02/15/mysqlTranscation/"/>
 
 
 
 
 
-  <title> tabu search | Waston's Blog </title>
+  <title> mysql事务学习笔记 | Waston's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -256,7 +256,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/18/tabu/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/15/mysqlTranscation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="waston">
@@ -277,7 +277,7 @@
             
             
               
-                tabu search
+                mysql事务学习笔记
               
             
           </h1>
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-18T22:55:02+08:00">
-                2017-04-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-15T21:48:29+08:00">
+                2018-02-15
               </time>
             
 
@@ -311,7 +311,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2017/04/18/tabu/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2018/02/15/mysqlTranscation/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -338,26 +338,71 @@
       
 
       
-        <h1 id="禁忌搜索算法"><a href="#禁忌搜索算法" class="headerlink" title="禁忌搜索算法"></a>禁忌搜索算法</h1><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>禁忌搜索(tabu search)由Fred Glover在1986年首次提出，它是局部邻域搜索算法的推广，模拟人类具有记忆功能的寻优特征，通过局部邻域搜索机制和相应的禁忌准则来避免迂回搜索，并通过破禁水平来释放一些被禁忌的优良状态，进而保证多样化的有效搜索，最终实现全局优化，达到跳出局部最优解的目的。<br><a id="more"></a></p>
-<h3 id="算法的流程"><a href="#算法的流程" class="headerlink" title="算法的流程"></a>算法的流程</h3><p>首先随机产生一个初始解作为当前解,然后在该初始解的邻域内选择若干个候选解。判断这些解是否在禁忌表中,并且评估这若干个解选出一个最优解。用该最优解代替当前解,同时把该最优解添加到禁忌表中<br>如此重复迭代过程直至满足条件或者迭代条件终止。</p>
-<ol>
-<li>随机方法产生当前解(current),并置空禁忌表</li>
-<li>判断当前解是否满足终止准则？满足输出最后结果。否则继续以下步骤</li>
-<li>搜索当前解的邻域,确定若干个候选解。</li>
-<li>逐一判断这些候选解是否在禁忌表中,如果不在禁忌表中则计算,并选择一个最好的局部最优解(local)。</li>
-<li>如果这个局部最优解优于全局最优解(global),global = local。</li>
-<li>用该局部最优解替代为当前解 current = local。并且将local加入到禁忌表中。</li>
-<li>为了避免一直局部最优解,应该选择一个规则删除禁忌表中的数据,从而有更多的选择。-&gt;2</li>
+        <h2 id="mysql的表锁和行锁"><a href="#mysql的表锁和行锁" class="headerlink" title="mysql的表锁和行锁"></a>mysql的表锁和行锁</h2><h3 id="表锁-table-lock"><a href="#表锁-table-lock" class="headerlink" title="表锁(table lock)"></a>表锁(table lock)</h3><p>表锁是mysql中最基本的所策略, 开销最小。会锁定整张表, 一个用户对表进行写操作前需要先获取写锁, 这会阻塞其它用户对该表的读写操作。在没有写锁的情况下, 用户可以获取读锁, 读锁之间是不互斥的, 也就是说多个用户可以同时加读锁, 但是不能加写锁。总结下来也就是写写互斥, 写读互斥, 读写互斥, 读读共享。因此读锁也称共享锁, 写锁称为排它锁。</p>
+<h3 id="行锁-row-lock"><a href="#行锁-row-lock" class="headerlink" title="行锁(row lock)"></a>行锁(row lock)</h3><p>行锁相对于表锁, 锁粒度更小, 因此可以更大的程度支持并发处理。行锁只在存储引擎层(如InnoDB引擎)实现, 而mysql服务层没有必要实现。行锁只是锁上那些被访问行记录而不是整个表。当然行锁也有读锁和写锁</p>
+<h3 id="锁定机制"><a href="#锁定机制" class="headerlink" title="锁定机制"></a>锁定机制</h3><ol>
+<li>表锁不需要用户自己干预, 由mysql自己处理</li>
+<li>行锁分为隐式锁定和显示锁定, 隐式锁定时InnoDB采用的两阶段锁定协议, 在事务执行过程中随时都可以锁定, 锁只有在commit或者rollback时才会释放, 并且所有的锁是同一时刻被释放。加锁InnoDB会根据设置的隔离级别在需要的时候加锁。</li>
+<li>InnoDB也支持特定的语句进行显示锁定, 使用方式如下: <br><br>共享锁: <strong>SELECT … LOCK IN SHARE MODE</strong> <br><br>排它锁: <strong>SELECT … FOR UPDATE</strong></li>
 </ol>
-<h3 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h3><ul>
-<li>禁忌表：是用来存放禁忌对象的一个容器，放入禁忌表中的禁忌对象在解禁之前不能被再次搜索。禁忌表模拟了人的记忆机制，主要目的是阻止搜索过程中出现循环和避免陷入局部最优，进而探索更多搜索空间；</li>
-<li>禁忌长度：可以为常数，也可以根据问题的规模确定；</li>
-<li>评价函数：可以为直接评价函数，通过目标函数的运算得到评价函数；也可以是间接评价函数，构造其他评价函数替代目标函数（应反映目标函数的特性）减少计算复杂性.</li>
-<li>藐视准则：它保证搜索过程在全部候选解被禁或者是有优于当前最优解的候选解被禁时，能够释放特定的解，从而实现全局优化搜索。当一个禁忌移动在随后T次的迭代内再度出现时，如果它能把搜索带到一个从未搜索过的区域，则应该接受该移动即破禁，不受禁忌表的限制。</li>
-<li>终止规则：保证算法具有优良的优化性能和时间性能，可以(1)确定步数终止，无法保证解的效果，应记录当前最优解；(2)频率控制原则，当某一个解、目标值或元素序列的频率超过一个给定值时，终止计算；(3)目标控制原则，如果在一个给定步数内，当前最优值没有变化，可终止计算。</li>
-</ul>
-<h3 id="具体代码片段"><a href="#具体代码片段" class="headerlink" title="具体代码片段"></a>具体代码片段</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">// 禁忌搜索</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">tabu</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="comment">//初始化操作</span></div><div class="line">	bestSolution = <span class="keyword">new</span> <span class="keyword">int</span>[k];<span class="comment">//全局最优</span></div><div class="line">	currentSolution = <span class="keyword">new</span> <span class="keyword">int</span>[k];<span class="comment">//当前解</span></div><div class="line">	localSolution = <span class="keyword">new</span> <span class="keyword">int</span>[k];<span class="comment">//局部最优</span></div><div class="line">	tabuList = <span class="keyword">new</span> <span class="keyword">int</span>[LEN][k];<span class="comment">//禁忌表</span></div><div class="line">	areaSolution = <span class="keyword">new</span> <span class="keyword">int</span>[k];<span class="comment">//邻域解</span></div><div class="line"></div><div class="line">	<span class="comment">//先随机生成一个解决方案</span></div><div class="line">	initSolution(currentSolution);</div><div class="line">	<span class="keyword">int</span> maxWeight = calWeight(currentSolution);<span class="comment">//最大值</span></div><div class="line">	copyArray(currentSolution,bestSolution);</div><div class="line"></div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> t = <span class="number">1</span>; t &lt;= iteratorTime; t++)&#123;</div><div class="line">		<span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">		<span class="keyword">int</span> localWeight = <span class="number">0</span>;</div><div class="line">		<span class="keyword">while</span>(count &lt;= NUM)&#123;</div><div class="line">			getSolutionFromArea(currentSolution, areaSolution);</div><div class="line">			<span class="comment">//该方案不在禁忌表中</span></div><div class="line">			<span class="keyword">if</span>(!isExist(areaSolution))&#123;</div><div class="line">				<span class="keyword">int</span> tempWeight = calWeight(areaSolution);</div><div class="line">				<span class="keyword">if</span>(tempWeight &gt; localWeight)&#123;</div><div class="line">					localWeight = tempWeight;</div><div class="line">					copyArray(areaSolution,localSolution);</div><div class="line">				&#125;</div><div class="line">				count++;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span>(localWeight &gt; maxWeight)&#123;</div><div class="line">			copyArray(localSolution,bestSolution);</div><div class="line">			maxWeight = localWeight;</div><div class="line">		&#125;</div><div class="line">		copyArray(localSolution, currentSolution);<span class="comment">//将这个邻域类最优解作为当前解</span></div><div class="line">		addList(localSolution);<span class="comment">//将这个邻域最优解加入到禁忌表,表示已经搜索过</span></div><div class="line">		</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-<p>参考:<br><br><a href="http://www.wangxianfeng.name/2012/08/intelligent-optimization-algorithms-tabu-search/" target="_blank" rel="external">I’m WANG Xianfeng</a><br><br><a href="http://blog.csdn.net/wangqiuyun/article/details/8816463" target="_blank" rel="external">wangqiuyun</a></p>
+<h2 id="mysql事务"><a href="#mysql事务" class="headerlink" title="mysql事务"></a>mysql事务</h2><h3 id="事务的ACID概念"><a href="#事务的ACID概念" class="headerlink" title="事务的ACID概念"></a>事务的ACID概念</h3><ol>
+<li>原子性(atomicity): 一个事务是不可分割的最小单元, 整个事务的操作要么全部执行成功, 要么全部失败。</li>
+<li>一致性(consistency): 数据库总是从一个一致性状态转移到另外一个一致性状态。</li>
+<li>隔离性(isolation): 讨论隔离级别时再细说</li>
+<li>持久性(durability): 一旦事务提交, 其做的修改就会永久保存到数据库中。</li>
+</ol>
+<h3 id="隔离级别"><a href="#隔离级别" class="headerlink" title="隔离级别"></a>隔离级别</h3><ol>
+<li>未提交读(READ UNCOMMITTED): 也就是说当前事务所做的修改即使没有提交, 对于其它事务也是可见的。会产生脏读</li>
+<li>提交读(READ COMMITTED): Oracle数据库默认的隔离级别, 一个事务从开始到提交之前, 在这个过程所做的修改对于其它事务是不可见的。这个级别有时候也叫做不可重复读, 因为在一个事务中两次执行同样的查询可能会得到不一样的结果。可以解决脏读</li>
+<li>可重复读(REPEATABLE READ)： mysql默认的隔离级别, 可以解决不可重复读, 保证在一个事务中两次一样的查询得到的结果相同。可是还是会出现幻读, 但是InnoDB引擎通过多版本并发控制(MVCC)解决了幻读问题。</li>
+<li>可串行化(Serializable): 最高的隔离级别, 最安全的, 并发能力最低, 使得事务串行操作, 每次读写都需要获得表级共享锁以及排它锁，读写相互都会阻塞。<br></li>
+</ol>
+<p>注:<br></p>
+<ol>
+<li>脏读(Dirty Read): 事务可以读取未提交的数据称为脏读。<br></li>
+<li>不可重复读(NonRepeatable Read): 在一个事务中两次执行同样的查询得到不一样的结果称之为不可重复读。<br></li>
+<li>幻读(Phantom Read): 幻读指当前事务在读取某个范围(比如一个表中)的记录时, 另外一个事务又在这个范围里插入新的记录, 当当前事务再次读取时多出了记录。<br><br><strong>不可重复读与幻读区别: 不可重复读与幻读很相似, 只是不可重复读针对update,delete, 而幻读针对insert。</strong></li>
+</ol>
+<p>总结:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">隔离级别</th>
+<th style="text-align:center">脏读</th>
+<th style="text-align:center">不可重复读</th>
+<th style="text-align:center">幻读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">未提交读</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">yes</td>
+</tr>
+<tr>
+<td style="text-align:center">提交读</td>
+<td style="text-align:center">no</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">yes</td>
+</tr>
+<tr>
+<td style="text-align:center">可重复读</td>
+<td style="text-align:center">no</td>
+<td style="text-align:center">no</td>
+<td style="text-align:center">yes</td>
+</tr>
+<tr>
+<td style="text-align:center">串行化</td>
+<td style="text-align:center">no</td>
+<td style="text-align:center">no</td>
+<td style="text-align:center">no</td>
+</tr>
+</tbody>
+</table>
+<p>通常说来在可重复读(REPEATABLE READ)隔离级别下, 是会出现幻读情况的, 但是mysql在REPEATABLE READ模式下可以解决幻读, 因为InnoDB引擎使用MVCC解决了幻读。</p>
+<h3 id="InnoDB引擎多版本并发控制原理-MVCC"><a href="#InnoDB引擎多版本并发控制原理-MVCC" class="headerlink" title="InnoDB引擎多版本并发控制原理(MVCC)"></a>InnoDB引擎多版本并发控制原理(MVCC)</h3><p>MVVC是通过每行在每行记录后面保存两个隐藏的列来实现的, 一个列保存了行的创建时间, 另一个保存行的过期时间(删除时间), 当然存储的并不是实际的时间值, 而是系统版本号。每开始一个新的事务, 系统版本号会自动递增。 事务开始时刻的版本号作为当前事务的版本号。<br><br>具体操作:<br><br>select：只查找&lt;=当前事务版本号的数据记录 <br><br>insert: 为新增的记录保存一个当前事务的系统版本号<br><br>delete: 为删除的记录保存一个当前事务的系统版本号作为行删除标识<br><br>update: 为新增的记录保存一个当前事务的系统版本号, 同时保存当前系统版本号到原来的行作为行删除标识。<br></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><strong>高性能mysql</strong></p>
 
       
     </div>
@@ -387,7 +432,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/随机算法/" rel="tag"># 随机算法</a>
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
           
         </div>
       
@@ -400,8 +445,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/25/thread-api/" rel="next" title="Thread常用API">
-                <i class="fa fa-chevron-left"></i> Thread常用API
+              <a href="/2018/02/17/blq/" rel="next" title="Java阻塞队列">
+                <i class="fa fa-chevron-left"></i> Java阻塞队列
               </a>
             
           </div>
@@ -410,8 +455,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/13/git/" rel="prev" title="git常用命令学习总结">
-                git常用命令学习总结 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/02/14/mysqlDateFun/" rel="prev" title="mysql日期函数使用总结">
+                mysql日期函数使用总结 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -574,7 +619,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#禁忌搜索算法"><span class="nav-number">1.</span> <span class="nav-text">禁忌搜索算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.0.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法的流程"><span class="nav-number">1.0.2.</span> <span class="nav-text">算法的流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关键词"><span class="nav-number">1.0.3.</span> <span class="nav-text">关键词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体代码片段"><span class="nav-number">1.0.4.</span> <span class="nav-text">具体代码片段</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql的表锁和行锁"><span class="nav-number">1.</span> <span class="nav-text">mysql的表锁和行锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#表锁-table-lock"><span class="nav-number">1.1.</span> <span class="nav-text">表锁(table lock)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#行锁-row-lock"><span class="nav-number">1.2.</span> <span class="nav-text">行锁(row lock)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#锁定机制"><span class="nav-number">1.3.</span> <span class="nav-text">锁定机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql事务"><span class="nav-number">2.</span> <span class="nav-text">mysql事务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#事务的ACID概念"><span class="nav-number">2.1.</span> <span class="nav-text">事务的ACID概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隔离级别"><span class="nav-number">2.2.</span> <span class="nav-text">隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB引擎多版本并发控制原理-MVCC"><span class="nav-number">2.3.</span> <span class="nav-text">InnoDB引擎多版本并发控制原理(MVCC)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">2.4.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
             
 
           </div>

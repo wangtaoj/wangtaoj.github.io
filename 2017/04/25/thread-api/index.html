@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="随机算法," />
+  <meta name="keywords" content="Java," />
 
 
 
@@ -93,17 +93,17 @@
 
 
 
-<meta name="description" content="禁忌搜索算法定义禁忌搜索(tabu search)由Fred Glover在1986年首次提出，它是局部邻域搜索算法的推广，模拟人类具有记忆功能的寻优特征，通过局部邻域搜索机制和相应的禁忌准则来避免迂回搜索，并通过破禁水平来释放一些被禁忌的优良状态，进而保证多样化的有效搜索，最终实现全局优化，达到跳出局部最优解的目的。">
-<meta name="keywords" content="随机算法">
+<meta name="description" content="进程与线程进程是受操作系统管理的基本运行单元,线程可以理解为进程中独立运行的一个子任务。进程中至少包含一个线程。">
+<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="tabu search">
-<meta property="og:url" content="http://yoursite.com/2017/04/18/tabu/index.html">
+<meta property="og:title" content="Thread常用API">
+<meta property="og:url" content="http://yoursite.com/2017/04/25/thread-api/index.html">
 <meta property="og:site_name" content="Waston's Blog">
-<meta property="og:description" content="禁忌搜索算法定义禁忌搜索(tabu search)由Fred Glover在1986年首次提出，它是局部邻域搜索算法的推广，模拟人类具有记忆功能的寻优特征，通过局部邻域搜索机制和相应的禁忌准则来避免迂回搜索，并通过破禁水平来释放一些被禁忌的优良状态，进而保证多样化的有效搜索，最终实现全局优化，达到跳出局部最优解的目的。">
-<meta property="og:updated_time" content="2017-04-18T15:47:27.626Z">
+<meta property="og:description" content="进程与线程进程是受操作系统管理的基本运行单元,线程可以理解为进程中独立运行的一个子任务。进程中至少包含一个线程。">
+<meta property="og:updated_time" content="2018-02-17T16:17:07.041Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tabu search">
-<meta name="twitter:description" content="禁忌搜索算法定义禁忌搜索(tabu search)由Fred Glover在1986年首次提出，它是局部邻域搜索算法的推广，模拟人类具有记忆功能的寻优特征，通过局部邻域搜索机制和相应的禁忌准则来避免迂回搜索，并通过破禁水平来释放一些被禁忌的优良状态，进而保证多样化的有效搜索，最终实现全局优化，达到跳出局部最优解的目的。">
+<meta name="twitter:title" content="Thread常用API">
+<meta name="twitter:description" content="进程与线程进程是受操作系统管理的基本运行单元,线程可以理解为进程中独立运行的一个子任务。进程中至少包含一个线程。">
 
 
 
@@ -131,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/04/18/tabu/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/04/25/thread-api/"/>
 
 
 
 
 
-  <title> tabu search | Waston's Blog </title>
+  <title> Thread常用API | Waston's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -256,7 +256,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/18/tabu/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/25/thread-api/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="waston">
@@ -277,7 +277,7 @@
             
             
               
-                tabu search
+                Thread常用API
               
             
           </h1>
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-18T22:55:02+08:00">
-                2017-04-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T22:49:50+08:00">
+                2017-04-25
               </time>
             
 
@@ -311,7 +311,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2017/04/18/tabu/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2017/04/25/thread-api/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -338,26 +338,40 @@
       
 
       
-        <h1 id="禁忌搜索算法"><a href="#禁忌搜索算法" class="headerlink" title="禁忌搜索算法"></a>禁忌搜索算法</h1><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>禁忌搜索(tabu search)由Fred Glover在1986年首次提出，它是局部邻域搜索算法的推广，模拟人类具有记忆功能的寻优特征，通过局部邻域搜索机制和相应的禁忌准则来避免迂回搜索，并通过破禁水平来释放一些被禁忌的优良状态，进而保证多样化的有效搜索，最终实现全局优化，达到跳出局部最优解的目的。<br><a id="more"></a></p>
-<h3 id="算法的流程"><a href="#算法的流程" class="headerlink" title="算法的流程"></a>算法的流程</h3><p>首先随机产生一个初始解作为当前解,然后在该初始解的邻域内选择若干个候选解。判断这些解是否在禁忌表中,并且评估这若干个解选出一个最优解。用该最优解代替当前解,同时把该最优解添加到禁忌表中<br>如此重复迭代过程直至满足条件或者迭代条件终止。</p>
-<ol>
-<li>随机方法产生当前解(current),并置空禁忌表</li>
-<li>判断当前解是否满足终止准则？满足输出最后结果。否则继续以下步骤</li>
-<li>搜索当前解的邻域,确定若干个候选解。</li>
-<li>逐一判断这些候选解是否在禁忌表中,如果不在禁忌表中则计算,并选择一个最好的局部最优解(local)。</li>
-<li>如果这个局部最优解优于全局最优解(global),global = local。</li>
-<li>用该局部最优解替代为当前解 current = local。并且将local加入到禁忌表中。</li>
-<li>为了避免一直局部最优解,应该选择一个规则删除禁忌表中的数据,从而有更多的选择。-&gt;2</li>
+        <h3 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h3><p>进程是受操作系统管理的基本运行单元,线程可以理解为进程中独立运行的一个子任务。<br>进程中至少包含一个线程。<br><a id="more"></a></p>
+<h3 id="java实现多线程的两种方式"><a href="#java实现多线程的两种方式" class="headerlink" title="java实现多线程的两种方式"></a>java实现多线程的两种方式</h3><ol>
+<li>继承Thread类,覆写run方法</li>
+<li>实现Runable接口,覆写run方法,将该Runnable子类传给Thread构造方法中<br>区别: 因为java只支持单继承的特点,一般实现线程选择实现Runable接口。</li>
 </ol>
-<h3 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h3><ul>
-<li>禁忌表：是用来存放禁忌对象的一个容器，放入禁忌表中的禁忌对象在解禁之前不能被再次搜索。禁忌表模拟了人的记忆机制，主要目的是阻止搜索过程中出现循环和避免陷入局部最优，进而探索更多搜索空间；</li>
-<li>禁忌长度：可以为常数，也可以根据问题的规模确定；</li>
-<li>评价函数：可以为直接评价函数，通过目标函数的运算得到评价函数；也可以是间接评价函数，构造其他评价函数替代目标函数（应反映目标函数的特性）减少计算复杂性.</li>
-<li>藐视准则：它保证搜索过程在全部候选解被禁或者是有优于当前最优解的候选解被禁时，能够释放特定的解，从而实现全局优化搜索。当一个禁忌移动在随后T次的迭代内再度出现时，如果它能把搜索带到一个从未搜索过的区域，则应该接受该移动即破禁，不受禁忌表的限制。</li>
-<li>终止规则：保证算法具有优良的优化性能和时间性能，可以(1)确定步数终止，无法保证解的效果，应记录当前最优解；(2)频率控制原则，当某一个解、目标值或元素序列的频率超过一个给定值时，终止计算；(3)目标控制原则，如果在一个给定步数内，当前最优值没有变化，可终止计算。</li>
-</ul>
-<h3 id="具体代码片段"><a href="#具体代码片段" class="headerlink" title="具体代码片段"></a>具体代码片段</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">// 禁忌搜索</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">tabu</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="comment">//初始化操作</span></div><div class="line">	bestSolution = <span class="keyword">new</span> <span class="keyword">int</span>[k];<span class="comment">//全局最优</span></div><div class="line">	currentSolution = <span class="keyword">new</span> <span class="keyword">int</span>[k];<span class="comment">//当前解</span></div><div class="line">	localSolution = <span class="keyword">new</span> <span class="keyword">int</span>[k];<span class="comment">//局部最优</span></div><div class="line">	tabuList = <span class="keyword">new</span> <span class="keyword">int</span>[LEN][k];<span class="comment">//禁忌表</span></div><div class="line">	areaSolution = <span class="keyword">new</span> <span class="keyword">int</span>[k];<span class="comment">//邻域解</span></div><div class="line"></div><div class="line">	<span class="comment">//先随机生成一个解决方案</span></div><div class="line">	initSolution(currentSolution);</div><div class="line">	<span class="keyword">int</span> maxWeight = calWeight(currentSolution);<span class="comment">//最大值</span></div><div class="line">	copyArray(currentSolution,bestSolution);</div><div class="line"></div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> t = <span class="number">1</span>; t &lt;= iteratorTime; t++)&#123;</div><div class="line">		<span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">		<span class="keyword">int</span> localWeight = <span class="number">0</span>;</div><div class="line">		<span class="keyword">while</span>(count &lt;= NUM)&#123;</div><div class="line">			getSolutionFromArea(currentSolution, areaSolution);</div><div class="line">			<span class="comment">//该方案不在禁忌表中</span></div><div class="line">			<span class="keyword">if</span>(!isExist(areaSolution))&#123;</div><div class="line">				<span class="keyword">int</span> tempWeight = calWeight(areaSolution);</div><div class="line">				<span class="keyword">if</span>(tempWeight &gt; localWeight)&#123;</div><div class="line">					localWeight = tempWeight;</div><div class="line">					copyArray(areaSolution,localSolution);</div><div class="line">				&#125;</div><div class="line">				count++;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span>(localWeight &gt; maxWeight)&#123;</div><div class="line">			copyArray(localSolution,bestSolution);</div><div class="line">			maxWeight = localWeight;</div><div class="line">		&#125;</div><div class="line">		copyArray(localSolution, currentSolution);<span class="comment">//将这个邻域类最优解作为当前解</span></div><div class="line">		addList(localSolution);<span class="comment">//将这个邻域最优解加入到禁忌表,表示已经搜索过</span></div><div class="line">		</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-<p>参考:<br><br><a href="http://www.wangxianfeng.name/2012/08/intelligent-optimization-algorithms-tabu-search/" target="_blank" rel="external">I’m WANG Xianfeng</a><br><br><a href="http://blog.csdn.net/wangqiuyun/article/details/8816463" target="_blank" rel="external">wangqiuyun</a></p>
+<h3 id="start-方法"><a href="#start-方法" class="headerlink" title="start()方法"></a>start()方法</h3><p>start()方法用于启动线程,它会调用run方法,必须使用start方法才算启动线程。也就是说调用run<br>方法只是执行了run方法的内容,但是并没有启动线程。</p>
+<h3 id="Thread-currentThread"><a href="#Thread-currentThread" class="headerlink" title="Thread.currentThread()"></a>Thread.currentThread()</h3><p>获取当前线程</p>
+<h3 id="getName"><a href="#getName" class="headerlink" title="getName()"></a>getName()</h3><p>获取线程的名字</p>
+<h3 id="isAlive"><a href="#isAlive" class="headerlink" title="isAlive()"></a>isAlive()</h3><p>判断线程是否处于活动状态,只要线程已经启动并且尚未终止就是处于活动状态。</p>
+<h3 id="sleep-long-millis"><a href="#sleep-long-millis" class="headerlink" title="sleep(long millis)"></a>sleep(long millis)</h3><p>使线程进入睡眠状态,如果在进入睡眠之前或者是在睡眠中别的线程中断了该线程则抛出<br>InterruptedException。此异常必须捕获。也就是说interrupt()会使线程从睡眠状态进入到<br>运行状态中。也就进入到catch代码块中。</p>
+<h3 id="yield"><a href="#yield" class="headerlink" title="yield()"></a>yield()</h3><p>使线程放弃cpu资源,当放弃的时间不确定。也有可能刚刚放弃执行权马上又抢到cpu资源进入到运行状态。</p>
+<h3 id="setPriority-int-priority-getPriority"><a href="#setPriority-int-priority-getPriority" class="headerlink" title="setPriority(int priority)/getPriority()"></a>setPriority(int priority)/getPriority()</h3><p>线程的优先级默认为5 依次从1-10。<br>并且线程的优先级具有继承性。也就是说A线程启动B线程,B线程的优先级与A一样。因为在创建线程时<br>即new Thread()将线程的优先级初始化了该线程的符线程的优先级。</p>
+<h3 id="setDaemon"><a href="#setDaemon" class="headerlink" title="setDaemon()"></a>setDaemon()</h3><p>将线程设置为守护线程。<br>在java线程中有两种线程用户线程和守护线程。当进程中不存在非守护线程时守护线程会自动销毁。<br>最典型的线程就是垃圾回收线程。</p>
+<h3 id="interrupt-isInterrupted-interrupted"><a href="#interrupt-isInterrupted-interrupted" class="headerlink" title="interrupt()/isInterrupted()/interrupted()"></a>interrupt()/isInterrupted()/interrupted()</h3><ol>
+<li>interrupt()改变线程的中断标志,使线程处于中断状态。</li>
+<li>isInterrupted()判断线程是否处于中断状态</li>
+<li>interrupted() 判断当前线程是否处于中断状态,所以此方法是静态方法</li>
+</ol>
+<h3 id="synchronized关键字"><a href="#synchronized关键字" class="headerlink" title="synchronized关键字"></a>synchronized关键字</h3><p>synchronized关键字是用来解决多个线程之间访问共享变量时出现非线程安全的问题</p>
+<ol>
+<li>同步代码块  使用的锁是关键字所用的对象</li>
+<li>同步函数  使用的是this 即当前对象</li>
+<li>同步静态函数  使用的是该类的字节码对象</li>
+</ol>
+<h3 id="volatile关键字"><a href="#volatile关键字" class="headerlink" title="volatile关键字"></a>volatile关键字</h3><p>只能用来修饰类的成员变量,主要作用使得它修饰的变量在多个线程之间是可见的。也就是说强迫每个线程从内存中重新读取该变量的值。注意该关键字不是原子性的操作,要解决安全问题还是得用synchronized</p>
+<h3 id="object类中的wait-wait-long-timeout-notify-notifyAll"><a href="#object类中的wait-wait-long-timeout-notify-notifyAll" class="headerlink" title="object类中的wait()/wait(long timeout)/notify/notifyAll()"></a>object类中的wait()/wait(long timeout)/notify/notifyAll()</h3><p>这些方法只能用在同步代码中,也就是说必须由锁对象来调用这些方法。否则抛出不合法监视状态异常<br>IllegalMonitorStateException。<br>wait()使当前线程处于等待状态,并且释放锁资源。<br>wait(long timeout)当时间到了自动唤醒<br>notify()唤醒一个wait()中的一个线程<br>notifyAll唤醒所有wait状态的线程。<br>在调用wait时:如果线程处于中断状态或者处于wait状态时别的线程中断了该线程会抛出中断异常</p>
+<h3 id="join-join-long-millis"><a href="#join-join-long-millis" class="headerlink" title="join()/join(long millis)"></a>join()/join(long millis)</h3><p>方法join()的作用是使调用join方法的线程A正常执行run方法中的任务,而使当前线程B进行无线阻塞直至A线程运行完毕。<br>因为join内部使用了wait所以释放锁。</p>
+<h3 id="释放锁的时机"><a href="#释放锁的时机" class="headerlink" title="释放锁的时机"></a>释放锁的时机</h3><ol>
+<li>调用了wait()方法</li>
+<li>出现了异常</li>
+<li>调用了join方法</li>
+</ol>
+<h3 id="抛InterruptedException"><a href="#抛InterruptedException" class="headerlink" title="抛InterruptedException"></a>抛InterruptedException</h3><p>Thread.sleep(long millis);<br>wait()<br>join()</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>java多线程编程核心技术</p>
 
       
     </div>
@@ -387,7 +401,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/随机算法/" rel="tag"># 随机算法</a>
+            <a href="/tags/Java/" rel="tag"># Java</a>
           
         </div>
       
@@ -400,8 +414,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/25/thread-api/" rel="next" title="Thread常用API">
-                <i class="fa fa-chevron-left"></i> Thread常用API
+              <a href="/2017/04/25/produce-consume/" rel="next" title="生产者消费者模式">
+                <i class="fa fa-chevron-left"></i> 生产者消费者模式
               </a>
             
           </div>
@@ -410,8 +424,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/13/git/" rel="prev" title="git常用命令学习总结">
-                git常用命令学习总结 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/18/tabu/" rel="prev" title="tabu search">
+                tabu search <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -574,7 +588,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#禁忌搜索算法"><span class="nav-number">1.</span> <span class="nav-text">禁忌搜索算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.0.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法的流程"><span class="nav-number">1.0.2.</span> <span class="nav-text">算法的流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关键词"><span class="nav-number">1.0.3.</span> <span class="nav-text">关键词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体代码片段"><span class="nav-number">1.0.4.</span> <span class="nav-text">具体代码片段</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#进程与线程"><span class="nav-number">1.</span> <span class="nav-text">进程与线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java实现多线程的两种方式"><span class="nav-number">2.</span> <span class="nav-text">java实现多线程的两种方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#start-方法"><span class="nav-number">3.</span> <span class="nav-text">start()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thread-currentThread"><span class="nav-number">4.</span> <span class="nav-text">Thread.currentThread()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getName"><span class="nav-number">5.</span> <span class="nav-text">getName()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#isAlive"><span class="nav-number">6.</span> <span class="nav-text">isAlive()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sleep-long-millis"><span class="nav-number">7.</span> <span class="nav-text">sleep(long millis)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yield"><span class="nav-number">8.</span> <span class="nav-text">yield()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#setPriority-int-priority-getPriority"><span class="nav-number">9.</span> <span class="nav-text">setPriority(int priority)/getPriority()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#setDaemon"><span class="nav-number">10.</span> <span class="nav-text">setDaemon()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#interrupt-isInterrupted-interrupted"><span class="nav-number">11.</span> <span class="nav-text">interrupt()/isInterrupted()/interrupted()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#synchronized关键字"><span class="nav-number">12.</span> <span class="nav-text">synchronized关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#volatile关键字"><span class="nav-number">13.</span> <span class="nav-text">volatile关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#object类中的wait-wait-long-timeout-notify-notifyAll"><span class="nav-number">14.</span> <span class="nav-text">object类中的wait()/wait(long timeout)/notify/notifyAll()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#join-join-long-millis"><span class="nav-number">15.</span> <span class="nav-text">join()/join(long millis)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#释放锁的时机"><span class="nav-number">16.</span> <span class="nav-text">释放锁的时机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#抛InterruptedException"><span class="nav-number">17.</span> <span class="nav-text">抛InterruptedException</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">18.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>

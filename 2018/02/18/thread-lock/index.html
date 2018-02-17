@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Java," />
 
 
 
@@ -93,15 +93,17 @@
 
 
 
-<meta name="description" content="学习笔记总结">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Waston's Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="Synchronized与Lock区别 synchronized是由JVM实现的, 由monitorenter, monitorexit指令实现 Lock是JUC包下的组件, 是基于CAS实现的 synchronized功能与ReentrantLock类相对应, 都是可重入的锁。 Lock组件相对于synchronized关键字优点1, Lock实现了公平锁与非公平锁公平锁: 即一个线程1比另一个">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="synchronized与Lock的理解">
+<meta property="og:url" content="http://yoursite.com/2018/02/18/thread-lock/index.html">
 <meta property="og:site_name" content="Waston's Blog">
-<meta property="og:description" content="学习笔记总结">
+<meta property="og:description" content="Synchronized与Lock区别 synchronized是由JVM实现的, 由monitorenter, monitorexit指令实现 Lock是JUC包下的组件, 是基于CAS实现的 synchronized功能与ReentrantLock类相对应, 都是可重入的锁。 Lock组件相对于synchronized关键字优点1, Lock实现了公平锁与非公平锁公平锁: 即一个线程1比另一个">
+<meta property="og:updated_time" content="2018-02-17T16:41:13.949Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Waston's Blog">
-<meta name="twitter:description" content="学习笔记总结">
+<meta name="twitter:title" content="synchronized与Lock的理解">
+<meta name="twitter:description" content="Synchronized与Lock区别 synchronized是由JVM实现的, 由monitorenter, monitorexit指令实现 Lock是JUC包下的组件, 是基于CAS实现的 synchronized功能与ReentrantLock类相对应, 都是可重入的锁。 Lock组件相对于synchronized关键字优点1, Lock实现了公平锁与非公平锁公平锁: 即一个线程1比另一个">
 
 
 
@@ -129,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/02/18/thread-lock/"/>
 
 
 
 
 
-  <title> Waston's Blog </title>
+  <title> synchronized与Lock的理解 | Waston's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -160,9 +162,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -245,9 +245,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -277,10 +277,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2018/02/18/thread-lock/" itemprop="url">
-                  synchronized与Lock的理解
-                </a>
+                synchronized与Lock的理解
               
             
           </h1>
@@ -309,6 +306,16 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2018/02/18/thread-lock/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -331,9 +338,7 @@
       
 
       
-        
-          
-            <h3 id="Synchronized与Lock区别"><a href="#Synchronized与Lock区别" class="headerlink" title="Synchronized与Lock区别"></a>Synchronized与Lock区别</h3><ul>
+        <h3 id="Synchronized与Lock区别"><a href="#Synchronized与Lock区别" class="headerlink" title="Synchronized与Lock区别"></a>Synchronized与Lock区别</h3><ul>
 <li>synchronized是由JVM实现的, 由monitorenter, monitorexit指令实现</li>
 <li>Lock是JUC包下的组件, 是基于CAS实现的</li>
 <li>synchronized功能与ReentrantLock类相对应, 都是可重入的锁。</li>
@@ -344,487 +349,78 @@
 <h3 id="lock-tryLock-lockInterruptibly方法"><a href="#lock-tryLock-lockInterruptibly方法" class="headerlink" title="lock, tryLock, lockInterruptibly方法"></a>lock, tryLock, lockInterruptibly方法</h3><p><strong>lock(): 调用后一直阻塞到获得锁</strong> <br><br><strong>tryLock() 尝试是否能获得锁, 如果不能获得立即返回</strong> <br><br><strong>lockInterruptibly() 调用后一直阻塞到获得锁, 但是接受中断信号, 会抛出InterruptedException异常</strong> <br></p>
 <h3 id="中断机制"><a href="#中断机制" class="headerlink" title="中断机制"></a>中断机制</h3><p>当线程处于wait, sleep, join(内部使用wait实现)状态时, 其他线程调用了该线程的interrupt()方法, 便会抛出InterruptedException异常。</p>
 <h3 id="lock-tryLock-lockInterruptibly方法的测试"><a href="#lock-tryLock-lockInterruptibly方法的测试" class="headerlink" title="lock, tryLock, lockInterruptibly方法的测试"></a>lock, tryLock, lockInterruptibly方法的测试</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">import</span> org.junit.Test;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.locks.Lock;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.locks.ReentrantLock;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LockTest</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Object lock = <span class="keyword">new</span> Object();</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 测试synchronized关键字</div><div class="line">     * synchronized: 当线程在获取锁失败时, 而另一个持有锁的线程久久不释放锁将会导致竞争失败的线程</div><div class="line">     * 会处于阻塞, 并且不响应中断直至获取到锁</div><div class="line">     */</div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSynchronized</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//当前线程持有锁</span></div><div class="line">        <span class="keyword">synchronized</span> (lock) &#123;</div><div class="line"></div><div class="line">            <span class="comment">//开启另外一个线程阻塞</span></div><div class="line">            Thread t = <span class="keyword">new</span> Thread(()-&gt;&#123;</div><div class="line">                <span class="comment">//阻塞</span></div><div class="line">                <span class="keyword">synchronized</span> (lock) &#123;</div><div class="line">                    System.out.println(<span class="string">"获取锁"</span>);</div><div class="line">                    System.out.println(Thread.currentThread().getName());</div><div class="line">                &#125;</div><div class="line">            &#125;, <span class="string">"block-thread"</span>);</div><div class="line">            t.start();</div><div class="line"></div><div class="line">            <span class="comment">//休眠一秒, 让开启的线程运行, 接着进行中断</span></div><div class="line">            sleep(<span class="number">1</span>);</div><div class="line">            t.interrupt();</div><div class="line"></div><div class="line">            <span class="comment">//长久睡眠不释放锁, 用来观察结果, 看看线程t是否会相应中断</span></div><div class="line">            sleep(<span class="number">100</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 测试lock.lock()同synchronized关键字, 一直阻塞不响应中断</div><div class="line">     */</div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testLock</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//当前线程持有锁</span></div><div class="line">        Lock lock = <span class="keyword">new</span> ReentrantLock();</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            lock.lock();</div><div class="line">            <span class="comment">//开启另外一个线程阻塞</span></div><div class="line">            Thread t = <span class="keyword">new</span> Thread(()-&gt;&#123;</div><div class="line">                <span class="comment">//阻塞</span></div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    lock.lock();</div><div class="line">                    System.out.println(<span class="string">"获取锁"</span>);</div><div class="line">                    System.out.println(Thread.currentThread().getName());</div><div class="line">                &#125; <span class="keyword">finally</span> &#123;</div><div class="line">                    lock.unlock();</div><div class="line">                &#125;</div><div class="line"></div><div class="line">            &#125;, <span class="string">"block-thread"</span>);</div><div class="line">            t.start();</div><div class="line"></div><div class="line">            <span class="comment">//休眠一秒, 让开启的线程运行, 接着进行中断</span></div><div class="line">            sleep(<span class="number">1</span>);</div><div class="line">            t.interrupt();</div><div class="line"></div><div class="line">            <span class="comment">//长久睡眠不释放锁, 用来观察结果, 看看线程t是否会相应中断</span></div><div class="line">            sleep(<span class="number">100</span>);</div><div class="line"></div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            lock.unlock();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 测试lock.lockInterruptibly(): 抛出中断异常</div><div class="line">     * 因此在阻塞时会响应中断, 不再阻塞, 从而执行异常catch快</div><div class="line">     */</div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testlockInterruptibly</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//当前线程持有锁</span></div><div class="line">        ReentrantLock lock = <span class="keyword">new</span> ReentrantLock();</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            lock.lock();</div><div class="line">            <span class="comment">//开启另外一个线程阻塞</span></div><div class="line">            Thread t = <span class="keyword">new</span> Thread(()-&gt;&#123;</div><div class="line">                <span class="comment">//阻塞</span></div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    lock.lockInterruptibly();</div><div class="line">                    System.out.println(<span class="string">"获取锁"</span>);</div><div class="line">                    System.out.println(Thread.currentThread().getName());</div><div class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                    System.out.println(Thread.currentThread().getName() + <span class="string">"is interrupted! exit"</span>);</div><div class="line">                &#125; <span class="keyword">finally</span> &#123;</div><div class="line">                    <span class="keyword">if</span>(lock.isHeldByCurrentThread())</div><div class="line">                        lock.unlock();</div><div class="line">                &#125;</div><div class="line"></div><div class="line">            &#125;, <span class="string">"block-thread"</span>);</div><div class="line">            t.start();</div><div class="line"></div><div class="line">            <span class="comment">//休眠一秒, 让开启的线程运行, 接着进行中断</span></div><div class="line">            sleep(<span class="number">1</span>);</div><div class="line">            t.interrupt();</div><div class="line"></div><div class="line">            <span class="comment">//长久睡眠不释放锁, 用来观察结果, 看看线程t是否会相应中断</span></div><div class="line">            sleep(<span class="number">10</span>);</div><div class="line"></div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            lock.unlock();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">sleep</span><span class="params">(<span class="keyword">int</span> second)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            TimeUnit.SECONDS.sleep(second);</div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-          
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
     <div>
+      
+        
+
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/17/blq/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="waston">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Waston's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/02/17/blq/" itemprop="url">
-                  Java阻塞队列
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-17T22:28:44+08:00">
-                2018-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/Java/" rel="tag"># Java</a>
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
         
-          
-            <h2 id="基本操作方法"><a href="#基本操作方法" class="headerlink" title="基本操作方法"></a>基本操作方法</h2><p><strong>Queue接口声明的方法</strong><br></p>
-<ol>
-<li>add, remove, element操作会抛出异常, 即队满时添加添加元素或者队空时删除元素, 获取队头元素<br></li>
-<li>offer, poll, peek不抛异常, 会返回null或者返回false</li>
-</ol>
-<p><strong> BlockingQueue接口继承自Queue接口</strong> <br></p>
-<p><font color="red"></font></p>
-<ol>
-<li>增加了put, take两个阻塞式操作, 添加/删除并且获取<br></li>
-<li>以及增加了offer, poll的超时阻塞操作, offer(超时了返回false, 不再阻塞), poll(超时了返回null, 不再阻塞)<br><br><br>BlockingQueue是也是一系列阻塞队列的父接口</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
       
 
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/15/mysqlTranscation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="waston">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Waston's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-            
-              
-                
-                <a class="post-title-link" href="/2018/02/15/mysqlTranscation/" itemprop="url">
-                  mysql事务学习笔记
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-15T21:48:29+08:00">
-                2018-02-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="mysql的表锁和行锁"><a href="#mysql的表锁和行锁" class="headerlink" title="mysql的表锁和行锁"></a>mysql的表锁和行锁</h2><h3 id="表锁-table-lock"><a href="#表锁-table-lock" class="headerlink" title="表锁(table lock)"></a>表锁(table lock)</h3><p>表锁是mysql中最基本的所策略, 开销最小。会锁定整张表, 一个用户对表进行写操作前需要先获取写锁, 这会阻塞其它用户对该表的读写操作。在没有写锁的情况下, 用户可以获取读锁, 读锁之间是不互斥的, 也就是说多个用户可以同时加读锁, 但是不能加写锁。总结下来也就是写写互斥, 写读互斥, 读写互斥, 读读共享。因此读锁也称共享锁, 写锁称为排它锁。</p>
-<h3 id="行锁-row-lock"><a href="#行锁-row-lock" class="headerlink" title="行锁(row lock)"></a>行锁(row lock)</h3><p>行锁相对于表锁, 锁粒度更小, 因此可以更大的程度支持并发处理。行锁只在存储引擎层(如InnoDB引擎)实现, 而mysql服务层没有必要实现。行锁只是锁上那些被访问行记录而不是整个表。当然行锁也有读锁和写锁</p>
-<h3 id="锁定机制"><a href="#锁定机制" class="headerlink" title="锁定机制"></a>锁定机制</h3><ol>
-<li>表锁不需要用户自己干预, 由mysql自己处理</li>
-<li>行锁分为隐式锁定和显示锁定, 隐式锁定时InnoDB采用的两阶段锁定协议, 在事务执行过程中随时都可以锁定, 锁只有在commit或者rollback时才会释放, 并且所有的锁是同一时刻被释放。加锁InnoDB会根据设置的隔离级别在需要的时候加锁。</li>
-<li>InnoDB也支持特定的语句进行显示锁定, 使用方式如下: <br><br>共享锁: <strong>SELECT … LOCK IN SHARE MODE</strong> <br><br>排它锁: <strong>SELECT … FOR UPDATE</strong></li>
-</ol>
-<h2 id="mysql事务"><a href="#mysql事务" class="headerlink" title="mysql事务"></a>mysql事务</h2><h3 id="事务的ACID概念"><a href="#事务的ACID概念" class="headerlink" title="事务的ACID概念"></a>事务的ACID概念</h3><ol>
-<li>原子性(atomicity): 一个事务是不可分割的最小单元, 整个事务的操作要么全部执行成功, 要么全部失败。</li>
-<li>一致性(consistency): 数据库总是从一个一致性状态转移到另外一个一致性状态。</li>
-<li>隔离性(isolation): 讨论隔离级别时再细说</li>
-<li>持久性(durability): 一旦事务提交, 其做的修改就会永久保存到数据库中。</li>
-</ol>
-<h3 id="隔离级别"><a href="#隔离级别" class="headerlink" title="隔离级别"></a>隔离级别</h3><ol>
-<li>未提交读(READ UNCOMMITTED): 也就是说当前事务所做的修改即使没有提交, 对于其它事务也是可见的。会产生脏读</li>
-<li>提交读(READ COMMITTED): Oracle数据库默认的隔离级别, 一个事务从开始到提交之前, 在这个过程所做的修改对于其它事务是不可见的。这个级别有时候也叫做不可重复读, 因为在一个事务中两次执行同样的查询可能会得到不一样的结果。可以解决脏读</li>
-<li>可重复读(REPEATABLE READ)： mysql默认的隔离级别, 可以解决不可重复读, 保证在一个事务中两次一样的查询得到的结果相同。可是还是会出现幻读, 但是InnoDB引擎通过多版本并发控制(MVCC)解决了幻读问题。</li>
-<li>可串行化(Serializable): 最高的隔离级别, 最安全的, 并发能力最低, 使得事务串行操作, 每次读写都需要获得表级共享锁以及排它锁，读写相互都会阻塞。<br></li>
-</ol>
-<p>注:<br></p>
-<ol>
-<li>脏读(Dirty Read): 事务可以读取未提交的数据称为脏读。<br></li>
-<li>不可重复读(NonRepeatable Read): 在一个事务中两次执行同样的查询得到不一样的结果称之为不可重复读。<br></li>
-<li>幻读(Phantom Read): 幻读指当前事务在读取某个范围(比如一个表中)的记录时, 另外一个事务又在这个范围里插入新的记录, 当当前事务再次读取时多出了记录。<br><br><strong>不可重复读与幻读区别: 不可重复读与幻读很相似, 只是不可重复读针对update,delete, 而幻读针对insert。</strong></li>
-</ol>
-<p>总结:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">隔离级别</th>
-<th style="text-align:center">脏读</th>
-<th style="text-align:center">不可重复读</th>
-<th style="text-align:center">幻读</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">未提交读</td>
-<td style="text-align:center">yes</td>
-<td style="text-align:center">yes</td>
-<td style="text-align:center">yes</td>
-</tr>
-<tr>
-<td style="text-align:center">提交读</td>
-<td style="text-align:center">no</td>
-<td style="text-align:center">yes</td>
-<td style="text-align:center">yes</td>
-</tr>
-<tr>
-<td style="text-align:center">可重复读</td>
-<td style="text-align:center">no</td>
-<td style="text-align:center">no</td>
-<td style="text-align:center">yes</td>
-</tr>
-<tr>
-<td style="text-align:center">串行化</td>
-<td style="text-align:center">no</td>
-<td style="text-align:center">no</td>
-<td style="text-align:center">no</td>
-</tr>
-</tbody>
-</table>
-<p>通常说来在可重复读(REPEATABLE READ)隔离级别下, 是会出现幻读情况的, 但是mysql在REPEATABLE READ模式下可以解决幻读, 因为InnoDB引擎使用MVCC解决了幻读。</p>
-<h3 id="InnoDB引擎多版本并发控制原理-MVCC"><a href="#InnoDB引擎多版本并发控制原理-MVCC" class="headerlink" title="InnoDB引擎多版本并发控制原理(MVCC)"></a>InnoDB引擎多版本并发控制原理(MVCC)</h3><p>MVVC是通过每行在每行记录后面保存两个隐藏的列来实现的, 一个列保存了行的创建时间, 另一个保存行的过期时间(删除时间), 当然存储的并不是实际的时间值, 而是系统版本号。每开始一个新的事务, 系统版本号会自动递增。 事务开始时刻的版本号作为当前事务的版本号。<br><br>具体操作:<br><br>select：只查找&lt;=当前事务版本号的数据记录 <br><br>insert: 为新增的记录保存一个当前事务的系统版本号<br><br>delete: 为删除的记录保存一个当前事务的系统版本号作为行删除标识<br><br>update: 为新增的记录保存一个当前事务的系统版本号, 同时保存当前系统版本号到原来的行作为行删除标识。<br></p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><strong>高性能mysql</strong></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/14/mysqlDateFun/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="waston">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Waston's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/02/14/mysqlDateFun/" itemprop="url">
-                  mysql日期函数使用总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-14T22:54:00+08:00">
-                2018-02-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="获取函数"><a href="#获取函数" class="headerlink" title="获取函数"></a>获取函数</h3><p>mysql默认的时间格式: yyyy-MM-dd 或者 yyyy-MM-dd HH:mm:ss <br/><br/><br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/02/14/mysqlDateFun/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
 
-    <div>
-      
-    </div>
+          <span class="post-nav-divider"></span>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/17/blq/" rel="prev" title="Java阻塞队列">
+                Java阻塞队列 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
       
 
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
 
+      
+    </div>
+  </div>
 
 
           </div>
@@ -832,6 +428,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
 
         </div>
         
@@ -851,8 +453,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/head.jpg"
@@ -939,6 +550,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Synchronized与Lock区别"><span class="nav-number">1.</span> <span class="nav-text">Synchronized与Lock区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lock-tryLock-lockInterruptibly方法"><span class="nav-number">2.</span> <span class="nav-text">lock, tryLock, lockInterruptibly方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中断机制"><span class="nav-number">3.</span> <span class="nav-text">中断机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lock-tryLock-lockInterruptibly方法的测试"><span class="nav-number">4.</span> <span class="nav-text">lock, tryLock, lockInterruptibly方法的测试</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1048,6 +675,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 

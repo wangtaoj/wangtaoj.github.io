@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="随机算法," />
+  <meta name="keywords" content="Java," />
 
 
 
@@ -93,17 +93,17 @@
 
 
 
-<meta name="description" content="禁忌搜索算法定义禁忌搜索(tabu search)由Fred Glover在1986年首次提出，它是局部邻域搜索算法的推广，模拟人类具有记忆功能的寻优特征，通过局部邻域搜索机制和相应的禁忌准则来避免迂回搜索，并通过破禁水平来释放一些被禁忌的优良状态，进而保证多样化的有效搜索，最终实现全局优化，达到跳出局部最优解的目的。">
-<meta name="keywords" content="随机算法">
+<meta name="description" content="多个生产者消费者实现的目标: 生产者实现一个就消费一个">
+<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="tabu search">
-<meta property="og:url" content="http://yoursite.com/2017/04/18/tabu/index.html">
+<meta property="og:title" content="生产者消费者模式">
+<meta property="og:url" content="http://yoursite.com/2017/04/25/produce-consume/index.html">
 <meta property="og:site_name" content="Waston's Blog">
-<meta property="og:description" content="禁忌搜索算法定义禁忌搜索(tabu search)由Fred Glover在1986年首次提出，它是局部邻域搜索算法的推广，模拟人类具有记忆功能的寻优特征，通过局部邻域搜索机制和相应的禁忌准则来避免迂回搜索，并通过破禁水平来释放一些被禁忌的优良状态，进而保证多样化的有效搜索，最终实现全局优化，达到跳出局部最优解的目的。">
-<meta property="og:updated_time" content="2017-04-18T15:47:27.626Z">
+<meta property="og:description" content="多个生产者消费者实现的目标: 生产者实现一个就消费一个">
+<meta property="og:updated_time" content="2018-02-17T16:18:49.101Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tabu search">
-<meta name="twitter:description" content="禁忌搜索算法定义禁忌搜索(tabu search)由Fred Glover在1986年首次提出，它是局部邻域搜索算法的推广，模拟人类具有记忆功能的寻优特征，通过局部邻域搜索机制和相应的禁忌准则来避免迂回搜索，并通过破禁水平来释放一些被禁忌的优良状态，进而保证多样化的有效搜索，最终实现全局优化，达到跳出局部最优解的目的。">
+<meta name="twitter:title" content="生产者消费者模式">
+<meta name="twitter:description" content="多个生产者消费者实现的目标: 生产者实现一个就消费一个">
 
 
 
@@ -131,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/04/18/tabu/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/04/25/produce-consume/"/>
 
 
 
 
 
-  <title> tabu search | Waston's Blog </title>
+  <title> 生产者消费者模式 | Waston's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -256,7 +256,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/18/tabu/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/25/produce-consume/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="waston">
@@ -277,7 +277,7 @@
             
             
               
-                tabu search
+                生产者消费者模式
               
             
           </h1>
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-18T22:55:02+08:00">
-                2017-04-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T23:57:37+08:00">
+                2017-04-25
               </time>
             
 
@@ -311,7 +311,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2017/04/18/tabu/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2017/04/25/produce-consume/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -338,26 +338,10 @@
       
 
       
-        <h1 id="禁忌搜索算法"><a href="#禁忌搜索算法" class="headerlink" title="禁忌搜索算法"></a>禁忌搜索算法</h1><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>禁忌搜索(tabu search)由Fred Glover在1986年首次提出，它是局部邻域搜索算法的推广，模拟人类具有记忆功能的寻优特征，通过局部邻域搜索机制和相应的禁忌准则来避免迂回搜索，并通过破禁水平来释放一些被禁忌的优良状态，进而保证多样化的有效搜索，最终实现全局优化，达到跳出局部最优解的目的。<br><a id="more"></a></p>
-<h3 id="算法的流程"><a href="#算法的流程" class="headerlink" title="算法的流程"></a>算法的流程</h3><p>首先随机产生一个初始解作为当前解,然后在该初始解的邻域内选择若干个候选解。判断这些解是否在禁忌表中,并且评估这若干个解选出一个最优解。用该最优解代替当前解,同时把该最优解添加到禁忌表中<br>如此重复迭代过程直至满足条件或者迭代条件终止。</p>
-<ol>
-<li>随机方法产生当前解(current),并置空禁忌表</li>
-<li>判断当前解是否满足终止准则？满足输出最后结果。否则继续以下步骤</li>
-<li>搜索当前解的邻域,确定若干个候选解。</li>
-<li>逐一判断这些候选解是否在禁忌表中,如果不在禁忌表中则计算,并选择一个最好的局部最优解(local)。</li>
-<li>如果这个局部最优解优于全局最优解(global),global = local。</li>
-<li>用该局部最优解替代为当前解 current = local。并且将local加入到禁忌表中。</li>
-<li>为了避免一直局部最优解,应该选择一个规则删除禁忌表中的数据,从而有更多的选择。-&gt;2</li>
-</ol>
-<h3 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h3><ul>
-<li>禁忌表：是用来存放禁忌对象的一个容器，放入禁忌表中的禁忌对象在解禁之前不能被再次搜索。禁忌表模拟了人的记忆机制，主要目的是阻止搜索过程中出现循环和避免陷入局部最优，进而探索更多搜索空间；</li>
-<li>禁忌长度：可以为常数，也可以根据问题的规模确定；</li>
-<li>评价函数：可以为直接评价函数，通过目标函数的运算得到评价函数；也可以是间接评价函数，构造其他评价函数替代目标函数（应反映目标函数的特性）减少计算复杂性.</li>
-<li>藐视准则：它保证搜索过程在全部候选解被禁或者是有优于当前最优解的候选解被禁时，能够释放特定的解，从而实现全局优化搜索。当一个禁忌移动在随后T次的迭代内再度出现时，如果它能把搜索带到一个从未搜索过的区域，则应该接受该移动即破禁，不受禁忌表的限制。</li>
-<li>终止规则：保证算法具有优良的优化性能和时间性能，可以(1)确定步数终止，无法保证解的效果，应记录当前最优解；(2)频率控制原则，当某一个解、目标值或元素序列的频率超过一个给定值时，终止计算；(3)目标控制原则，如果在一个给定步数内，当前最优值没有变化，可终止计算。</li>
-</ul>
-<h3 id="具体代码片段"><a href="#具体代码片段" class="headerlink" title="具体代码片段"></a>具体代码片段</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">// 禁忌搜索</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">tabu</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="comment">//初始化操作</span></div><div class="line">	bestSolution = <span class="keyword">new</span> <span class="keyword">int</span>[k];<span class="comment">//全局最优</span></div><div class="line">	currentSolution = <span class="keyword">new</span> <span class="keyword">int</span>[k];<span class="comment">//当前解</span></div><div class="line">	localSolution = <span class="keyword">new</span> <span class="keyword">int</span>[k];<span class="comment">//局部最优</span></div><div class="line">	tabuList = <span class="keyword">new</span> <span class="keyword">int</span>[LEN][k];<span class="comment">//禁忌表</span></div><div class="line">	areaSolution = <span class="keyword">new</span> <span class="keyword">int</span>[k];<span class="comment">//邻域解</span></div><div class="line"></div><div class="line">	<span class="comment">//先随机生成一个解决方案</span></div><div class="line">	initSolution(currentSolution);</div><div class="line">	<span class="keyword">int</span> maxWeight = calWeight(currentSolution);<span class="comment">//最大值</span></div><div class="line">	copyArray(currentSolution,bestSolution);</div><div class="line"></div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> t = <span class="number">1</span>; t &lt;= iteratorTime; t++)&#123;</div><div class="line">		<span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">		<span class="keyword">int</span> localWeight = <span class="number">0</span>;</div><div class="line">		<span class="keyword">while</span>(count &lt;= NUM)&#123;</div><div class="line">			getSolutionFromArea(currentSolution, areaSolution);</div><div class="line">			<span class="comment">//该方案不在禁忌表中</span></div><div class="line">			<span class="keyword">if</span>(!isExist(areaSolution))&#123;</div><div class="line">				<span class="keyword">int</span> tempWeight = calWeight(areaSolution);</div><div class="line">				<span class="keyword">if</span>(tempWeight &gt; localWeight)&#123;</div><div class="line">					localWeight = tempWeight;</div><div class="line">					copyArray(areaSolution,localSolution);</div><div class="line">				&#125;</div><div class="line">				count++;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span>(localWeight &gt; maxWeight)&#123;</div><div class="line">			copyArray(localSolution,bestSolution);</div><div class="line">			maxWeight = localWeight;</div><div class="line">		&#125;</div><div class="line">		copyArray(localSolution, currentSolution);<span class="comment">//将这个邻域类最优解作为当前解</span></div><div class="line">		addList(localSolution);<span class="comment">//将这个邻域最优解加入到禁忌表,表示已经搜索过</span></div><div class="line">		</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-<p>参考:<br><br><a href="http://www.wangxianfeng.name/2012/08/intelligent-optimization-algorithms-tabu-search/" target="_blank" rel="external">I’m WANG Xianfeng</a><br><br><a href="http://blog.csdn.net/wangqiuyun/article/details/8816463" target="_blank" rel="external">wangqiuyun</a></p>
+        <h3 id="多个生产者消费者"><a href="#多个生产者消费者" class="headerlink" title="多个生产者消费者"></a>多个生产者消费者</h3><p>实现的目标: 生产者实现一个就消费一个<br><a id="more"></a><br>code:<br>Resource.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Resource</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">private</span> <span class="keyword">boolean</span> flag;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> count;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">produce</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</div><div class="line">			<span class="comment">//多个生产者时必须用while循环判断,不然会出现生产者连续生产</span></div><div class="line">			<span class="keyword">while</span>(flag)</div><div class="line">				<span class="keyword">try</span> &#123;</div><div class="line">					<span class="keyword">this</span>.wait();</div><div class="line">				&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">					e.printStackTrace();</div><div class="line">				&#125;</div><div class="line">			count++;</div><div class="line">			System.out.println(Thread.currentThread().getName() + <span class="string">" - "</span> + count);</div><div class="line">			flag = <span class="keyword">true</span>;</div><div class="line">			<span class="keyword">this</span>.notifyAll();</div><div class="line">			<span class="comment">/*</span></div><div class="line">			 * 多个生产者必须notifyAll(),否则会造成假死状态,即所有生产消费线程都处于等待状态</div><div class="line">			 * 造成这种原因的是没有唤醒对方线程</div><div class="line">			 */</div><div class="line">			 </div><div class="line">			<span class="keyword">if</span>(count &gt;= <span class="number">100</span>)</div><div class="line">				<span class="keyword">return</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">consumer</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</div><div class="line">			<span class="comment">//多个消费者时得用while循环判断,不然会发生一个count被消费两次的现象</span></div><div class="line">			<span class="keyword">while</span>(!flag)</div><div class="line">				<span class="keyword">try</span> &#123;</div><div class="line">					<span class="keyword">this</span>.wait();</div><div class="line">				&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">					e.printStackTrace();</div><div class="line">				&#125;</div><div class="line">			System.out.println(Thread.currentThread().getName() + <span class="string">" - "</span> + count);</div><div class="line">			flag = <span class="keyword">false</span>;</div><div class="line">			<span class="keyword">this</span>.notifyAll();</div><div class="line">			<span class="keyword">if</span>(count &gt;= <span class="number">100</span>)</div><div class="line">				<span class="keyword">return</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Producer.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Producer</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">private</span> Resource resource;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Producer</span><span class="params">(Resource resource)</span></span>&#123;</div><div class="line">		<span class="keyword">this</span>.resource = resource;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">		resource.produce();</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Consumer.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">private</span> Resource resource;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Consumer</span><span class="params">(Resource resource)</span></span>&#123;</div><div class="line">		<span class="keyword">this</span>.resource = resource;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">		resource.consumer();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Main.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		Resource resource = <span class="keyword">new</span> Resource();</div><div class="line">		Thread t1 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Producer(resource),<span class="string">"生产者1"</span>);</div><div class="line">		t1.start();</div><div class="line">	</div><div class="line">		Thread t2 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Producer(resource),<span class="string">"生产者2"</span>);</div><div class="line">		t2.start();</div><div class="line">		</div><div class="line">		Thread t3 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Consumer(resource),<span class="string">"消费者1"</span>);</div><div class="line">		t3.start();</div><div class="line">		</div><div class="line">		Thread t4 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Consumer(resource),<span class="string">"消费者2"</span>);</div><div class="line">		t4.start();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -387,7 +371,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/随机算法/" rel="tag"># 随机算法</a>
+            <a href="/tags/Java/" rel="tag"># Java</a>
           
         </div>
       
@@ -400,8 +384,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/25/thread-api/" rel="next" title="Thread常用API">
-                <i class="fa fa-chevron-left"></i> Thread常用API
+              <a href="/2017/05/01/genetic/" rel="next" title="遗传算法">
+                <i class="fa fa-chevron-left"></i> 遗传算法
               </a>
             
           </div>
@@ -410,8 +394,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/13/git/" rel="prev" title="git常用命令学习总结">
-                git常用命令学习总结 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/25/thread-api/" rel="prev" title="Thread常用API">
+                Thread常用API <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -574,7 +558,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#禁忌搜索算法"><span class="nav-number">1.</span> <span class="nav-text">禁忌搜索算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.0.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法的流程"><span class="nav-number">1.0.2.</span> <span class="nav-text">算法的流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关键词"><span class="nav-number">1.0.3.</span> <span class="nav-text">关键词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体代码片段"><span class="nav-number">1.0.4.</span> <span class="nav-text">具体代码片段</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#多个生产者消费者"><span class="nav-number">1.</span> <span class="nav-text">多个生产者消费者</span></a></li></ol></div>
             
 
           </div>

@@ -100,7 +100,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/02/15/mysqlTranscation/index.html">
 <meta property="og:site_name" content="Waston's Blog">
 <meta property="og:description" content="mysql的表锁和行锁表锁(table lock)表锁是mysql中最基本的所策略, 开销最小。会锁定整张表, 一个用户对表进行写操作前需要先获取写锁, 这会阻塞其它用户对该表的读写操作。在没有写锁的情况下, 用户可以获取读锁, 读锁之间是不互斥的, 也就是说多个用户可以同时加读锁, 但是不能加写锁。总结下来也就是写写互斥, 写读互斥, 读写互斥, 读读共享。因此读锁也称共享锁, 写锁称为排它锁。">
-<meta property="og:updated_time" content="2018-02-17T14:21:53.434Z">
+<meta property="og:updated_time" content="2018-02-17T16:46:41.059Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql事务学习笔记">
 <meta name="twitter:description" content="mysql的表锁和行锁表锁(table lock)表锁是mysql中最基本的所策略, 开销最小。会锁定整张表, 一个用户对表进行写操作前需要先获取写锁, 这会阻塞其它用户对该表的读写操作。在没有写锁的情况下, 用户可以获取读锁, 读锁之间是不互斥的, 也就是说多个用户可以同时加读锁, 但是不能加写锁。总结下来也就是写写互斥, 写读互斥, 读写互斥, 读读共享。因此读锁也称共享锁, 写锁称为排它锁。">
@@ -339,6 +339,7 @@
 
       
         <h2 id="mysql的表锁和行锁"><a href="#mysql的表锁和行锁" class="headerlink" title="mysql的表锁和行锁"></a>mysql的表锁和行锁</h2><h3 id="表锁-table-lock"><a href="#表锁-table-lock" class="headerlink" title="表锁(table lock)"></a>表锁(table lock)</h3><p>表锁是mysql中最基本的所策略, 开销最小。会锁定整张表, 一个用户对表进行写操作前需要先获取写锁, 这会阻塞其它用户对该表的读写操作。在没有写锁的情况下, 用户可以获取读锁, 读锁之间是不互斥的, 也就是说多个用户可以同时加读锁, 但是不能加写锁。总结下来也就是写写互斥, 写读互斥, 读写互斥, 读读共享。因此读锁也称共享锁, 写锁称为排它锁。</p>
+<a id="more"></a>
 <h3 id="行锁-row-lock"><a href="#行锁-row-lock" class="headerlink" title="行锁(row lock)"></a>行锁(row lock)</h3><p>行锁相对于表锁, 锁粒度更小, 因此可以更大的程度支持并发处理。行锁只在存储引擎层(如InnoDB引擎)实现, 而mysql服务层没有必要实现。行锁只是锁上那些被访问行记录而不是整个表。当然行锁也有读锁和写锁</p>
 <h3 id="锁定机制"><a href="#锁定机制" class="headerlink" title="锁定机制"></a>锁定机制</h3><ol>
 <li>表锁不需要用户自己干预, 由mysql自己处理</li>
@@ -445,8 +446,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/17/blq/" rel="next" title="Java阻塞队列">
-                <i class="fa fa-chevron-left"></i> Java阻塞队列
+              <a href="/2018/02/17/blq-linked/" rel="next" title="Java阻塞队列之LinkedBlockingQueue">
+                <i class="fa fa-chevron-left"></i> Java阻塞队列之LinkedBlockingQueue
               </a>
             
           </div>

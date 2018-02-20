@@ -104,7 +104,7 @@
 <meta property="og:image" content="https://waston1997.github.io/images/myImages/201802201.png">
 <meta property="og:image" content="https://waston1997.github.io/images/myImages/201802202.png">
 <meta property="og:image" content="https://waston1997.github.io/images/myImages/201802203.png">
-<meta property="og:updated_time" content="2018-02-20T08:16:47.362Z">
+<meta property="og:updated_time" content="2018-02-20T08:30:02.095Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AQS(AbstractQueuedSynchronizer)之学习笔记">
 <meta name="twitter:description" content="AQS简介AbstractQueuedSynchronizer即队列同步器, 是一个用来构建锁或者其它同步组件的基础框架, 内部使用一个int类型的state字段表示同步状态, 还有一个队列来完成线程获取资源的工作。这个类使用非常广泛, JUC包下很多组件是依赖于AQS类实现的。比如ReentrantLock, ReentrantReadWriteLock, CountDownLatch, Sem">
@@ -343,7 +343,7 @@
       
 
       
-        <h3 id="AQS简介"><a href="#AQS简介" class="headerlink" title="AQS简介"></a>AQS简介</h3><p>AbstractQueuedSynchronizer即队列同步器, 是一个用来构建锁或者其它同步组件的基础框架, 内部使用一个int类型的state字段表示同步状态, 还有一个队列来完成线程获取资源的工作。这个类使用非常广泛, JUC包下很多组件是依赖于AQS类实现的。比如ReentrantLock, ReentrantReadWriteLock, CountDownLatch, Semaphore类等。AQS主要分为两类操作独占式获取锁释放同步状态, 共享式独占释放同步状态。次文将借助ReentrantLock来说明AQS独占式(exclusive)操作的实现。<br><a id="more"></a></p>
+        <h3 id="AQS简介"><a href="#AQS简介" class="headerlink" title="AQS简介"></a>AQS简介</h3><p>AbstractQueuedSynchronizer即队列同步器, 是一个用来构建锁或者其它同步组件的基础框架, 内部使用一个int类型的state字段表示同步状态, 还有一个队列来完成线程获取资源的工作。这个类使用非常广泛, JUC包下很多组件是依赖于AQS类实现的。比如ReentrantLock, ReentrantReadWriteLock, CountDownLatch, Semaphore类等。AQS主要分为两类操作独占式获取释放同步状态, 共享式独占释放同步状态。次文将借助ReentrantLock来说明AQS独占式(exclusive)操作的实现。<br><a id="more"></a></p>
 <h3 id="独占式主要API"><a href="#独占式主要API" class="headerlink" title="独占式主要API"></a>独占式主要API</h3><p>void acquire(int arg); 独占式获取同步状态, 如果当前线程获取同步状态成功则方法结束, 否则将会进入同步队列等待, 会调用tryAcquire()方法<br>boolean tryAcquire(int arg) 由子类自己实现<br>void release(int arg); 独占式释放同步状态<br>boolean tryRelease(int arg) 由子类自己实现</p>
 <h3 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h3><p>从ReentrantLock(可重入锁)类入手, 该类基于AQS独占式实现。而且还分为公平策略和非公平策略。<br>公平锁即获取锁的顺序应当与被阻塞的先后循序相同, 就是说如果多个线程因为获取锁失败而阻塞, 当锁释放后应当按照线程阻塞的先后时间来获取锁, 这样才公平, 也可以有效地防止线程饥饿现象。否则就是非公平锁了。<br></p>
 <p>先看公平锁的实现<br><br><strong>先明确一个概念, state &gt; 0说明是已经获取同步状态, 大于0是因为ReentrantLock是可重入的, 当持有锁的线程再次获取该锁, state = state + 1; state = 0 说明该锁已被释放。</strong></p>
@@ -367,6 +367,10 @@
 <p>先理下调用流程:<br><br><strong>fair: ReentrantLock:lock()-&gt; FairSync:lock()-&gt; 继承AQS:acquire()-&gt; FairSync:tryAcquire()</strong><br></p>
 <p><strong>nonFair:ReentrantLock:lock()-&gt; NonfairSync:lock()-&gt; 继承AQS:acquire()-&gt;NofairSync: tryAcquire()</strong> <br></p>
 <p>非公平锁与公平锁实现区别: <br><br><strong>1. 先去尝试获取下同步状态, 失败再执行acquire方法。</strong> <br><br><strong>2. tryAcquire()方法实现不同, 具体说来。公平锁如果发现state = 0, 即同步状态已经被释放会先检查队列中有没有被阻塞的线程, 如果有则不去获取锁, 而非公平锁不care, 只要发现锁是释放状态, 则去获取锁, 看谁运气好先更新同步状态谁就先获取到锁。</strong> <br><br>基于以上两点从而实现的非公平锁</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
+<li>Java并发编程的艺术</li>
+<li>JDK 1.8 源码</li>
+</ol>
 
       
     </div>
@@ -408,6 +412,10 @@
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/20/readWriteLock/" rel="next" title="ReentantReadWriteLock(读写锁)之学习笔记">
+                <i class="fa fa-chevron-left"></i> ReentantReadWriteLock(读写锁)之学习笔记
+              </a>
             
           </div>
 
@@ -497,7 +505,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -510,7 +518,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -579,7 +587,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#AQS简介"><span class="nav-number">1.</span> <span class="nav-text">AQS简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#独占式主要API"><span class="nav-number">2.</span> <span class="nav-text">独占式主要API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源码分析"><span class="nav-number">3.</span> <span class="nav-text">源码分析</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#AQS简介"><span class="nav-number">1.</span> <span class="nav-text">AQS简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#独占式主要API"><span class="nav-number">2.</span> <span class="nav-text">独占式主要API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源码分析"><span class="nav-number">3.</span> <span class="nav-text">源码分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>

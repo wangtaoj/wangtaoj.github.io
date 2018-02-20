@@ -256,6 +256,131 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/20/readWriteLock/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="waston">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Waston's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/02/20/readWriteLock/" itemprop="url">
+                  ReentantReadWriteLock(读写锁)之学习笔记
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-20T17:32:00+08:00">
+                2018-02-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="ReadWriteLock-读写锁-简介"><a href="#ReadWriteLock-读写锁-简介" class="headerlink" title="ReadWriteLock(读写锁)简介"></a>ReadWriteLock(读写锁)简介</h3><p>ReentrantLock是一种排他锁, ReadWriteLock的读锁是一种共享锁, 允许多个线程同时持有该锁。<br>ReadWriteLock是一个接口, 内部只定义了两个方法。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/02/20/readWriteLock/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/19/aqs/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -332,7 +457,7 @@
 
       
         
-          <h3 id="AQS简介"><a href="#AQS简介" class="headerlink" title="AQS简介"></a>AQS简介</h3><p>AbstractQueuedSynchronizer即队列同步器, 是一个用来构建锁或者其它同步组件的基础框架, 内部使用一个int类型的state字段表示同步状态, 还有一个队列来完成线程获取资源的工作。这个类使用非常广泛, JUC包下很多组件是依赖于AQS类实现的。比如ReentrantLock, ReentrantReadWriteLock, CountDownLatch, Semaphore类等。AQS主要分为两类操作独占式获取锁释放同步状态, 共享式独占释放同步状态。次文将借助ReentrantLock来说明AQS独占式(exclusive)操作的实现。<br>
+          <h3 id="AQS简介"><a href="#AQS简介" class="headerlink" title="AQS简介"></a>AQS简介</h3><p>AbstractQueuedSynchronizer即队列同步器, 是一个用来构建锁或者其它同步组件的基础框架, 内部使用一个int类型的state字段表示同步状态, 还有一个队列来完成线程获取资源的工作。这个类使用非常广泛, JUC包下很多组件是依赖于AQS类实现的。比如ReentrantLock, ReentrantReadWriteLock, CountDownLatch, Semaphore类等。AQS主要分为两类操作独占式获取释放同步状态, 共享式独占释放同步状态。次文将借助ReentrantLock来说明AQS独占式(exclusive)操作的实现。<br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/02/19/aqs/#more" rel="contents">
@@ -457,21 +582,14 @@
 
       
         
-          
-            <a id="more"></a>
-<h3 id="属性介绍"><a href="#属性介绍" class="headerlink" title="属性介绍"></a>属性介绍</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//存放元素的数组</span></div><div class="line"><span class="keyword">final</span> Object[] items;</div><div class="line"></div><div class="line">   <span class="comment">//队头元素索引</span></div><div class="line">   <span class="keyword">int</span> takeIndex;</div><div class="line"></div><div class="line">   <span class="comment">//队尾元素的下一个, 也是put操作所放的位置</span></div><div class="line">   <span class="keyword">int</span> putIndex;</div><div class="line"></div><div class="line">   <span class="comment">//队列中元素的数量</span></div><div class="line">   <span class="keyword">int</span> count;</div><div class="line"></div><div class="line"><span class="comment">//可重入锁</span></div><div class="line"><span class="keyword">final</span> ReentrantLock lock;</div><div class="line">   <span class="keyword">private</span> <span class="keyword">final</span> Condition notEmpty;</div><div class="line">   <span class="keyword">private</span> <span class="keyword">final</span> Condition notFull;</div></pre></td></tr></table></figure>
-<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//初始化队列, 默认非公平策略</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">ArrayBlockingQueue</span><span class="params">(<span class="keyword">int</span> capacity)</span> </span>&#123;</div><div class="line">       <span class="keyword">this</span>(capacity, <span class="keyword">false</span>);</div><div class="line">   &#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">ArrayBlockingQueue</span><span class="params">(<span class="keyword">int</span> capacity, <span class="keyword">boolean</span> fair)</span> </span>&#123;</div><div class="line">       <span class="keyword">if</span> (capacity &lt;= <span class="number">0</span>)</div><div class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();</div><div class="line">       <span class="keyword">this</span>.items = <span class="keyword">new</span> Object[capacity];</div><div class="line">	<span class="comment">//初始化锁</span></div><div class="line">       lock = <span class="keyword">new</span> ReentrantLock(fair);</div><div class="line">       notEmpty = lock.newCondition();</div><div class="line">       notFull =  lock.newCondition();</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p>初始化可以指定策略是公平还是非公平的, 这是基于ReentrantLock的公平锁非公平锁实现的。<br><br>初始化就是一个空数组, takeIndex = putIndex = 0;</p>
-<h3 id="put方法源码"><a href="#put方法源码" class="headerlink" title="put方法源码"></a>put方法源码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//从队尾插入元素, 队满了则阻塞</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(E e)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</div><div class="line">	<span class="comment">//检查待插入元素是否为null, 会抛出NullPointerException</span></div><div class="line">       checkNotNull(e);</div><div class="line">	<span class="comment">//获取锁</span></div><div class="line">       <span class="keyword">final</span> ReentrantLock lock = <span class="keyword">this</span>.lock;</div><div class="line">       lock.lockInterruptibly();</div><div class="line"></div><div class="line">       <span class="keyword">try</span> &#123;</div><div class="line">		<span class="comment">//如果队满, 则阻塞</span></div><div class="line">           <span class="keyword">while</span> (count == items.length)</div><div class="line">               notFull.await();</div><div class="line">		<span class="comment">//进队</span></div><div class="line">           enqueue(e);</div><div class="line">       &#125; <span class="keyword">finally</span> &#123;</div><div class="line">           lock.unlock();</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line"></div><div class="line"><span class="comment">//入队方法</span></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">enqueue</span><span class="params">(E x)</span> </span>&#123;</div><div class="line">       <span class="keyword">final</span> Object[] items = <span class="keyword">this</span>.items;</div><div class="line">	<span class="comment">//插入元素</span></div><div class="line">       items[putIndex] = x;</div><div class="line">	<span class="comment">//插入元素后已经队满, 置putIndex = 0, 循环队列的意味</span></div><div class="line">       <span class="keyword">if</span> (++putIndex == items.length)</div><div class="line">           putIndex = <span class="number">0</span>;</div><div class="line">       count++;</div><div class="line">	<span class="comment">//队列已有元素, 唤醒执行take操作被阻塞的线程。</span></div><div class="line">       notEmpty.signal();</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<h3 id="take方法源码"><a href="#take方法源码" class="headerlink" title="take方法源码"></a>take方法源码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//从队头获取元素, 如果队空则被阻塞</span></div><div class="line"><span class="function"><span class="keyword">public</span> E <span class="title">take</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</div><div class="line">	<span class="comment">//获取锁</span></div><div class="line">       <span class="keyword">final</span> ReentrantLock lock = <span class="keyword">this</span>.lock;</div><div class="line">       lock.lockInterruptibly();</div><div class="line">       <span class="keyword">try</span> &#123;</div><div class="line">		<span class="comment">//如果队列为空, 阻塞</span></div><div class="line">           <span class="keyword">while</span> (count == <span class="number">0</span>)</div><div class="line">               notEmpty.await();</div><div class="line">		<span class="comment">//获取出队元素</span></div><div class="line">           <span class="keyword">return</span> dequeue();</div><div class="line">       &#125; <span class="keyword">finally</span> &#123;</div><div class="line">           lock.unlock();</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> E <span class="title">dequeue</span><span class="params">()</span> </span>&#123;</div><div class="line">       <span class="keyword">final</span> Object[] items = <span class="keyword">this</span>.items;</div><div class="line">       <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</div><div class="line">	<span class="comment">//获取队头元素</span></div><div class="line">       E x = (E) items[takeIndex];</div><div class="line">	<span class="comment">//值队头元素引用为null, 帮助gc</span></div><div class="line">       items[takeIndex] = <span class="keyword">null</span>;</div><div class="line">	<span class="comment">//索引走到数组的最后, 重置为0</span></div><div class="line">       <span class="keyword">if</span> (++takeIndex == items.length)</div><div class="line">           takeIndex = <span class="number">0</span>;</div><div class="line">       count--;</div><div class="line">       <span class="keyword">if</span> (itrs != <span class="keyword">null</span>)</div><div class="line">           itrs.elementDequeued();</div><div class="line">	<span class="comment">//唤醒因执行put操作被阻塞的线程, 因为已经有空位置容纳元素了</span></div><div class="line">       notFull.signal();</div><div class="line">       <span class="keyword">return</span> x;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>ArrayBlockingQueue与LinkedBlockingQueue的区别:<br></p>
-<ul>
-<li>ArrayBlockingQueue底层是一个数组, 并且重复利用空间, 是一个循环队列。LinkedBlockingQueue底层是一个链表实现</li>
-<li>ArrayBlockingQueue可以实现公平非公平策略, 依赖于可重入锁ReentrantLock的公平锁和非公平锁实现。</li>
-<li>ArrayBlockingQueue put操作与take操作用的是同一把锁, 因此读写是互斥的, 而LinkedBlockingQueue put操作与take操作用的是不同的锁, 因此多线程环境下, 一个线程可以执行写操作(put), 另一个线程可以执行读操作(take), 效率相对而言较高。</li>
-</ul>
-
-          
+          <h3 id="属性介绍"><a href="#属性介绍" class="headerlink" title="属性介绍"></a>属性介绍</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//存放元素的数组</span></div><div class="line"><span class="keyword">final</span> Object[] items;</div><div class="line"></div><div class="line">   <span class="comment">//队头元素索引</span></div><div class="line">   <span class="keyword">int</span> takeIndex;</div><div class="line"></div><div class="line">   <span class="comment">//队尾元素的下一个, 也是put操作所放的位置</span></div><div class="line">   <span class="keyword">int</span> putIndex;</div><div class="line"></div><div class="line">   <span class="comment">//队列中元素的数量</span></div><div class="line">   <span class="keyword">int</span> count;</div><div class="line"></div><div class="line"><span class="comment">//可重入锁</span></div><div class="line"><span class="keyword">final</span> ReentrantLock lock;</div><div class="line">   <span class="keyword">private</span> <span class="keyword">final</span> Condition notEmpty;</div><div class="line">   <span class="keyword">private</span> <span class="keyword">final</span> Condition notFull;</div></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/02/18/blq-array/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -636,134 +754,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/17/blq-linked/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="waston">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Waston's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/02/17/blq-linked/" itemprop="url">
-                  Java阻塞队列之LinkedBlockingQueue
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-17T22:28:44+08:00">
-                2018-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="基本操作方法"><a href="#基本操作方法" class="headerlink" title="基本操作方法"></a>基本操作方法</h2><p><strong>Queue接口声明的方法</strong><br/></p>
-<ol>
-<li>add, remove, element操作会抛出异常, 即队满时添加添加元素或者队空时删除元素, 获取队头元素<br/></li>
-<li>offer, poll, peek不抛异常, 会返回null或者返回false
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/02/17/blq-linked/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -813,7 +803,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -826,7 +816,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

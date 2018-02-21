@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Java," />
 
 
 
@@ -93,15 +93,20 @@
 
 
 
-<meta name="description" content="学习笔记总结">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Waston's Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="线程池值执行者(Executor)Executor家族成员如图所示:   Executor执行者根接口类, 声明execute方法用来提交实现Runnable接口的任务. ExecutorService接口继承自Executor接口, 又增加了一个submit()方法用来提交实现Callable接口的任务, 可以有返回值。ExecutorService主要的方法介绍: void execute(R">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线程池原理">
+<meta property="og:url" content="http://yoursite.com/2018/02/20/threadpool/index.html">
 <meta property="og:site_name" content="Waston's Blog">
-<meta property="og:description" content="学习笔记总结">
+<meta property="og:description" content="线程池值执行者(Executor)Executor家族成员如图所示:   Executor执行者根接口类, 声明execute方法用来提交实现Runnable接口的任务. ExecutorService接口继承自Executor接口, 又增加了一个submit()方法用来提交实现Callable接口的任务, 可以有返回值。ExecutorService主要的方法介绍: void execute(R">
+<meta property="og:image" content="https://waston1997.github.io/images/myImages/201802211.png">
+<meta property="og:image" content="https://waston1997.github.io/images/myImages/201802212.png">
+<meta property="og:updated_time" content="2018-02-21T14:12:20.925Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Waston's Blog">
-<meta name="twitter:description" content="学习笔记总结">
+<meta name="twitter:title" content="线程池原理">
+<meta name="twitter:description" content="线程池值执行者(Executor)Executor家族成员如图所示:   Executor执行者根接口类, 声明execute方法用来提交实现Runnable接口的任务. ExecutorService接口继承自Executor接口, 又增加了一个submit()方法用来提交实现Callable接口的任务, 可以有返回值。ExecutorService主要的方法介绍: void execute(R">
+<meta name="twitter:image" content="https://waston1997.github.io/images/myImages/201802211.png">
 
 
 
@@ -129,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/02/20/threadpool/"/>
 
 
 
 
 
-  <title> Waston's Blog </title>
+  <title> 线程池原理 | Waston's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -160,9 +165,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -245,9 +248,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -277,10 +280,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2018/02/20/threadpool/" itemprop="url">
-                  线程池原理
-                </a>
+                线程池原理
               
             
           </h1>
@@ -309,6 +309,16 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2018/02/20/threadpool/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -331,9 +341,7 @@
       
 
       
-        
-          
-            <h2 id="线程池值执行者-Executor"><a href="#线程池值执行者-Executor" class="headerlink" title="线程池值执行者(Executor)"></a>线程池值执行者(Executor)</h2><p>Executor家族成员如图所示:<br><br><img src="https://waston1997.github.io/images/myImages/201802211.png" alt=""> </p>
+        <h2 id="线程池值执行者-Executor"><a href="#线程池值执行者-Executor" class="headerlink" title="线程池值执行者(Executor)"></a>线程池值执行者(Executor)</h2><p>Executor家族成员如图所示:<br><br><img src="https://waston1997.github.io/images/myImages/201802211.png" alt=""> </p>
 <ol>
 <li>Executor执行者根接口类, 声明execute方法用来提交实现Runnable接口的任务.<br></li>
 <li>ExecutorService接口继承自Executor接口, 又增加了一个submit()方法用来提交实现Callable接口的任务, 可以有返回值。<br><br>ExecutorService主要的方法介绍: <br><br>void execute(Runnable command); 提交实现Runnable接口的任务。<br><br><t> Future<t> submit(Callable<t> task); 提交实现Callable接口的任务, 可以拿到返回值。<br><br>void shutdown(); //执行完已经提交的任务后, 关闭线程池, 线程池会拒绝后续提交的任务.<br><br>boolean awaitTermination(long timeout, TimeUnit unit); 会阻塞当前线程直至线程池关闭或者超时时间已到, 通常与shutdown方法搭配使用。<br>例如:<br></t></t></t></li>
@@ -364,421 +372,78 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newCachedThreadPool</span><span class="params">()</span> </span>&#123;</div><div class="line">       <span class="keyword">return</span> <span class="keyword">new</span> ThreadPoolExecutor(<span class="number">0</span>, Integer.MAX_VALUE,</div><div class="line">                                     <span class="number">60L</span>, TimeUnit.SECONDS,</div><div class="line">                                     <span class="keyword">new</span> SynchronousQueue&lt;Runnable&gt;());</div><div class="line">   &#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newCachedThreadPool</span><span class="params">(ThreadFactory threadFactory)</span> </span>&#123;</div><div class="line">       <span class="keyword">return</span> <span class="keyword">new</span> ThreadPoolExecutor(<span class="number">0</span>, Integer.MAX_VALUE,</div><div class="line">                                     <span class="number">60L</span>, TimeUnit.SECONDS,</div><div class="line">                                     <span class="keyword">new</span> SynchronousQueue&lt;Runnable&gt;(),</div><div class="line">                                     threadFactory);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
 <p>说明: <br><br>corePoolsize = 0, maximumPoolSize = Integer.MAX_VALUE。即线程池的容量是无界的, 工作队列为SynchronousQueue, 这是一个没有容量的阻塞队列。keepAliveTime = 60, 因为corePoolsize = 0, 即池中的所有空闲线程只要在60秒内还没有收到新任务将会被终止。将参数整合下, 意思就是每次提交任务, 由于corePoolsize = 0, 将任务添加到队列中。又因为工作队列容量为0,而maximumPoolSize无界, 如果此时线程池中存在空闲线程(60s才终止), 空闲线程执行任务, 如果没有则新建线程执行任务。因此这是一个会按需新建线程的线程池。</p>
 
-          
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
     <div>
+      
+        
+
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/20/readWriteLock/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="waston">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Waston's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/02/20/readWriteLock/" itemprop="url">
-                  ReentantReadWriteLock(读写锁)之学习笔记
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-20T17:32:00+08:00">
-                2018-02-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/Java/" rel="tag"># Java</a>
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
         
-          <h3 id="ReadWriteLock-读写锁-简介"><a href="#ReadWriteLock-读写锁-简介" class="headerlink" title="ReadWriteLock(读写锁)简介"></a>ReadWriteLock(读写锁)简介</h3><p>ReentrantLock是一种排他锁, ReadWriteLock的读锁是一种共享锁, 允许多个线程同时持有该锁。<br>ReadWriteLock是一个接口, 内部只定义了两个方法。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/02/20/readWriteLock/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
 
-    <div>
-      
-    </div>
+          <span class="post-nav-divider"></span>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/19/aqs/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="waston">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Waston's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+          <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/02/20/readWriteLock/" rel="prev" title="ReentantReadWriteLock(读写锁)之学习笔记">
+                ReentantReadWriteLock(读写锁)之学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
             
-              
-                
-                <a class="post-title-link" href="/2018/02/19/aqs/" itemprop="url">
-                  AQS(AbstractQueuedSynchronizer)之学习笔记
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-19T20:33:55+08:00">
-                2018-02-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <h3 id="AQS简介"><a href="#AQS简介" class="headerlink" title="AQS简介"></a>AQS简介</h3><p>AbstractQueuedSynchronizer即队列同步器, 是一个用来构建锁或者其它同步组件的基础框架, 内部使用一个int类型的state字段表示同步状态, 还有一个队列来完成线程获取资源的工作。这个类使用非常广泛, JUC包下很多组件是依赖于AQS类实现的。比如ReentrantLock, ReentrantReadWriteLock, CountDownLatch, Semaphore类等。AQS主要分为两类操作独占式获取释放同步状态, 共享式独占释放同步状态。次文将借助ReentrantLock来说明AQS独占式(exclusive)操作的实现。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/02/19/aqs/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/18/blq-array/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="waston">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Waston's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/02/18/blq-array/" itemprop="url">
-                  阻塞队列之ArrayBlockingQueue学习笔记
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-18T22:12:04+08:00">
-                2018-02-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
+    <div class="post-spread">
       
         
-          <h3 id="属性介绍"><a href="#属性介绍" class="headerlink" title="属性介绍"></a>属性介绍</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//存放元素的数组</span></div><div class="line"><span class="keyword">final</span> Object[] items;</div><div class="line"></div><div class="line">   <span class="comment">//队头元素索引</span></div><div class="line">   <span class="keyword">int</span> takeIndex;</div><div class="line"></div><div class="line">   <span class="comment">//队尾元素的下一个, 也是put操作所放的位置</span></div><div class="line">   <span class="keyword">int</span> putIndex;</div><div class="line"></div><div class="line">   <span class="comment">//队列中元素的数量</span></div><div class="line">   <span class="keyword">int</span> count;</div><div class="line"></div><div class="line"><span class="comment">//可重入锁</span></div><div class="line"><span class="keyword">final</span> ReentrantLock lock;</div><div class="line">   <span class="keyword">private</span> <span class="keyword">final</span> Condition notEmpty;</div><div class="line">   <span class="keyword">private</span> <span class="keyword">final</span> Condition notFull;</div></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/02/18/blq-array/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-  </section>
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
-
+  </div>
 
 
           </div>
@@ -786,6 +451,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
 
         </div>
         
@@ -805,8 +476,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/head.jpg"
@@ -893,6 +573,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#线程池值执行者-Executor"><span class="nav-number">1.</span> <span class="nav-text">线程池值执行者(Executor)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#线程池中五种状态"><span class="nav-number">1.1.</span> <span class="nav-text">线程池中五种状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ThreadPoolExecutor构造方法参数解释"><span class="nav-number">1.2.</span> <span class="nav-text">ThreadPoolExecutor构造方法参数解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Executors提供的几种线程池"><span class="nav-number">1.3.</span> <span class="nav-text">Executors提供的几种线程池</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1002,6 +698,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 

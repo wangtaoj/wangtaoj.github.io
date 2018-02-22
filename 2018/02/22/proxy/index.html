@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Java," />
 
 
 
@@ -93,15 +93,17 @@
 
 
 
-<meta name="description" content="学习笔记总结">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Waston's Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="前言以前虽然也使用过JDK的动态代理, 但是不知道原理是怎样的, 今天便花点时间来搞懂它。 动态代理的使用动态代理非常有用, 也是设计模式代理模式的一种实现方式。最经典的就是Spring AOP的使用了。先使用动态代理来模拟一个事务提交以及回滚的操作。 先定义UserService接口1234567public interface UserService &amp;#123;    /**     * 业">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="细说JDK动态代理">
+<meta property="og:url" content="http://yoursite.com/2018/02/22/proxy/index.html">
 <meta property="og:site_name" content="Waston's Blog">
-<meta property="og:description" content="学习笔记总结">
+<meta property="og:description" content="前言以前虽然也使用过JDK的动态代理, 但是不知道原理是怎样的, 今天便花点时间来搞懂它。 动态代理的使用动态代理非常有用, 也是设计模式代理模式的一种实现方式。最经典的就是Spring AOP的使用了。先使用动态代理来模拟一个事务提交以及回滚的操作。 先定义UserService接口1234567public interface UserService &amp;#123;    /**     * 业">
+<meta property="og:updated_time" content="2018-02-22T15:03:00.867Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Waston's Blog">
-<meta name="twitter:description" content="学习笔记总结">
+<meta name="twitter:title" content="细说JDK动态代理">
+<meta name="twitter:description" content="前言以前虽然也使用过JDK的动态代理, 但是不知道原理是怎样的, 今天便花点时间来搞懂它。 动态代理的使用动态代理非常有用, 也是设计模式代理模式的一种实现方式。最经典的就是Spring AOP的使用了。先使用动态代理来模拟一个事务提交以及回滚的操作。 先定义UserService接口1234567public interface UserService &amp;#123;    /**     * 业">
 
 
 
@@ -129,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/02/22/proxy/"/>
 
 
 
 
 
-  <title> Waston's Blog </title>
+  <title> 细说JDK动态代理 | Waston's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -160,9 +162,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -245,9 +245,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -277,10 +277,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2018/02/22/proxy/" itemprop="url">
-                  细说JDK动态代理
-                </a>
+                细说JDK动态代理
               
             
           </h1>
@@ -309,6 +306,16 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2018/02/22/proxy/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -331,9 +338,7 @@
       
 
       
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>以前虽然也使用过JDK的动态代理, 但是不知道原理是怎样的, 今天便花点时间来搞懂它。</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>以前虽然也使用过JDK的动态代理, 但是不知道原理是怎样的, 今天便花点时间来搞懂它。</p>
 <h3 id="动态代理的使用"><a href="#动态代理的使用" class="headerlink" title="动态代理的使用"></a>动态代理的使用</h3><p>动态代理非常有用, 也是设计模式代理模式的一种实现方式。最经典的就是Spring AOP的使用了。<br>先使用动态代理来模拟一个事务提交以及回滚的操作。</p>
 <p>先定义UserService接口<br><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserService</span> </span>&#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 业务方法</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">service</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>实现类UserServiceImpl <br><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title">UserService</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"execute user service"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -345,453 +350,78 @@
 <p>通过Proxy类以及生成的$Proxy2类可以知道还有一种更加复杂的写法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProxyTest</span> </span>&#123;</div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testProxy</span><span class="params">()</span>  </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="comment">//被代理对象</span></div><div class="line">            UserService userService = <span class="keyword">new</span> UserServiceImpl();</div><div class="line">            <span class="comment">//拿到代理类的字节码对象</span></div><div class="line">            Class&lt;?&gt; cls = Proxy.getProxyClass(ProxyTest.class.getClassLoader(),</div><div class="line">                userService.getClass().getInterfaces());</div><div class="line">            <span class="comment">//获取构造方法</span></div><div class="line">            Constructor&lt;?&gt; con = cls.getConstructor(InvocationHandler.class);</div><div class="line">            <span class="comment">//获取代理对象</span></div><div class="line">            UserService proxyUserService = (UserService)con.newInstance(</div><div class="line">                <span class="keyword">new</span> DefaultHandle(userService));</div><div class="line">            proxyUserService.service();</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <h3 id="动态代理的不足"><a href="#动态代理的不足" class="headerlink" title="动态代理的不足"></a>动态代理的不足</h3><p><strong>可以看到要想使用动态代理被代理对象必须要实现接口<br></strong></p>
 
-          
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
     <div>
+      
+        
+
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/22/CAS/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="waston">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Waston's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/02/22/CAS/" itemprop="url">
-                  CAS实现原子操作
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-22T21:22:36+08:00">
-                2018-02-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/Java/" rel="tag"># Java</a>
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
         
-          
-            <h3 id="CAS简介"><a href="#CAS简介" class="headerlink" title="CAS简介"></a>CAS简介</h3><p>CAS即Compare and Swap(比较并交换), 操作时需要3个值, 分别是内存位置, 旧的期望值和新值, 在操作期间先比较旧值有没有发生变化, 如果没有发生变化则交换成新值, 否则不交换。这个操作是一个原子操作。</p>
-<h3 id="Java如何使用CAS"><a href="#Java如何使用CAS" class="headerlink" title="Java如何使用CAS"></a>Java如何使用CAS</h3><p>Java主要使用Unsafe类来操作, 通过使用Unsafe的compareAndSwapInt, compareAndSwapLong, compareAndSwapObject方法来使用CAS。<br>看看Unsafe类的部分源码<br><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Unsafe</span> </span>&#123;</div><div class="line">   	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Unsafe theUnsafe;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Unsafe</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Unsafe <span class="title">getUnsafe</span><span class="params">()</span> </span>&#123;</div><div class="line">        Class var0 = Reflection.getCallerClass();</div><div class="line">        <span class="keyword">if</span> (!VM.isSystemDomainLoader(var0.getClassLoader())) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> SecurityException(<span class="string">"Unsafe"</span>);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> theUnsafe;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">native</span> <span class="keyword">boolean</span> <span class="title">compareAndSwapObject</span><span class="params">(Object var1, <span class="keyword">long</span> var2, Object var4, Object var5)</span></span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">native</span> <span class="keyword">boolean</span> <span class="title">compareAndSwapInt</span><span class="params">(Object var1, <span class="keyword">long</span> var2, <span class="keyword">int</span> var4, <span class="keyword">int</span> var5)</span></span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">native</span> <span class="keyword">boolean</span> <span class="title">compareAndSwapLong</span><span class="params">(Object var1, <span class="keyword">long</span> var2, <span class="keyword">long</span> var4, <span class="keyword">long</span> var6)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>compareAndSwapInt方法的参数:用来以CAS方式修改整型变量<br><br><strong>var1:要修改的对象</strong> <br><br><strong>var2: 偏移量, 可以理解为内存地址</strong><br><br><strong>var3: 旧值</strong> <br><br><strong>var4: 新值</strong> <br><br>一般说来是可以通过Unsafe.getgetUnsafe()拿到Unsafe对象的, 但是JDK并没有把这个类提供给用户程序使用。因为只有启动类加载器(Bootstrap ClassLoader)加载的类才能访问它。但是我们可以通过反射机制可以获取到该对象。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">	Field f = Unsafe.class.getDeclaredField("theUnsafe");</div><div class="line">    f.setAccessible(true);</div><div class="line">    Unsafe unsafe = (Unsafe) f.get(null);</div><div class="line">``` </div><div class="line"></div><div class="line">### 线程不安全的自增操作</div><div class="line">例子如下:</div><div class="line"></div><div class="line">``` java</div><div class="line"></div><div class="line">	public class Test &#123;</div><div class="line"></div><div class="line">	    private static volatile int count;</div><div class="line">	</div><div class="line">	    public static void main(String[] args) throws InterruptedException&#123;</div><div class="line">	        ExecutorService service = Executors.newCachedThreadPool();</div><div class="line">	</div><div class="line">	        for(int i = 0; i &lt; 10; i++) &#123;</div><div class="line">	            service.execute(()-&gt;&#123;</div><div class="line">	                for(int j = 0; j &lt; 2000; j++)</div><div class="line">	                    count++;</div><div class="line">	            &#125;);</div><div class="line">	        &#125;</div><div class="line">	        service.shutdown();</div><div class="line">	        service.awaitTermination(60, TimeUnit.SECONDS);</div><div class="line">	        System.out.println(count);</div><div class="line">	    &#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-<p>开启10个线程对count变量进行自增操作, 但是每次运行结果却不是得到20000, 得到的是一个小于20000的数。可见自增操作不是一个原子操作, 当一个线程读取到count值时, 还没有进行相加操作, 而另一个线程此时修改了count值, 那么当前线程读取到的count值是一个过期数据, 所有得到的结果会比预期值小。</p>
-<h3 id="使用自旋CAS的方式实现原子操作"><a href="#使用自旋CAS的方式实现原子操作" class="headerlink" title="使用自旋CAS的方式实现原子操作"></a>使用自旋CAS的方式实现原子操作</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> sun.misc.Unsafe;</div><div class="line"><span class="keyword">import</span> java.lang.reflect.Field;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAtomicInteger</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Unsafe unsafe;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> offset;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">int</span> value;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> &#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Field f = Unsafe.class.getDeclaredField(<span class="string">"theUnsafe"</span>);</div><div class="line">            f.setAccessible(<span class="keyword">true</span>);</div><div class="line">            unsafe = (Unsafe) f.get(<span class="keyword">null</span>);</div><div class="line">            offset = unsafe.objectFieldOffset(</div><div class="line">                    MyAtomicInteger.class.getDeclaredField(<span class="string">"value"</span>));</div><div class="line">        &#125;<span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> Error(e);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyAtomicInteger</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.value = value;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 初始化为0</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyAtomicInteger</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>(<span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.value = value;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">get</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> value;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取旧值, 原子方式加1</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getAndIncrement</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> getAndAdd(<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 利用CAS操作修改值, 修改成功返回true, 否则返回false</div><div class="line">     * <span class="doctag">@param</span> expect</div><div class="line">     * <span class="doctag">@param</span> newValue</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">compareAndSet</span><span class="params">(<span class="keyword">int</span> expect, <span class="keyword">int</span> newValue)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> unsafe.compareAndSwapInt(<span class="keyword">this</span>, offset, expect, newValue);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 自旋修改值</div><div class="line">     * <span class="doctag">@param</span> number</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getAndAdd</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span>(; ;) &#123;</div><div class="line">            <span class="keyword">int</span> oldValue = get();</div><div class="line">            <span class="keyword">if</span>(compareAndSet(oldValue, oldValue + number))</div><div class="line">                <span class="keyword">return</span> oldValue;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><pre><code class="java">
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>{
-
-    <span class="keyword">private</span> <span class="keyword">static</span> MyAtomicInteger count = <span class="keyword">new</span> MyAtomicInteger();
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException</span>{
-        ExecutorService service = Executors.newCachedThreadPool();
-
-        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) {
-            service.execute(()-&gt;{
-                <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">2000</span>; j++)
-                    count.getAndIncrement();
-            });
-        }
-        service.shutdown();
-        service.awaitTermination(<span class="number">60</span>, TimeUnit.SECONDS);
-        System.out.println(count.get());
-    }
-}
-</code></pre>
-<p>经过多次运行每次都能得到20000的结果, 可见使用CAS操作使得自增操作变得线程安全了, getAndIncrement()方法是一个原子操作。其实强大的JDK已经提供了这样一个以原子方式更新整型变量的值, 即AtomicInteger类。</p>
-<h3 id="CAS实现原子操作的三大问题"><a href="#CAS实现原子操作的三大问题" class="headerlink" title="CAS实现原子操作的三大问题"></a>CAS实现原子操作的三大问题</h3><p>CAS虽然很高效的解决了原子操作, 但是CAS仍然存在以下问题。<br></p>
-<ol>
-<li>ABA问题。CAS操作会检查原来的旧值, 没有变才会更新值, 但是一个值由A-&gt;B-&gt;A, 检查时值没有变化, 但是实际上发生了变化。解决思路是使用版本号 <br></li>
-<li>循环时间长开销大。如果自旋CAS长时间不成功, 会给CPU带来非常大的执行开销 <br></li>
-<li>只能保证一个共享变量的原子操作 <br></li>
-</ol>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
-<li>Java并发编程的艺术<br></li>
-<li>JDK1.8 源码</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
       
 
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/20/threadpool/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="waston">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Waston's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-            
-              
-                
-                <a class="post-title-link" href="/2018/02/20/threadpool/" itemprop="url">
-                  线程池原理
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-20T22:26:16+08:00">
-                2018-02-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="线程池值执行者-Executor"><a href="#线程池值执行者-Executor" class="headerlink" title="线程池值执行者(Executor)"></a>线程池值执行者(Executor)</h2><p>Executor家族成员如图所示:<br/><br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/02/20/threadpool/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
 
-    <div>
-      
-    </div>
+          <span class="post-nav-divider"></span>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/20/readWriteLock/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="waston">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Waston's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+          <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/02/22/CAS/" rel="prev" title="CAS实现原子操作">
+                CAS实现原子操作 <i class="fa fa-chevron-right"></i>
+              </a>
             
-              
-                
-                <a class="post-title-link" href="/2018/02/20/readWriteLock/" itemprop="url">
-                  ReentantReadWriteLock(读写锁)之学习笔记
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-20T17:32:00+08:00">
-                2018-02-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="ReadWriteLock-读写锁-简介"><a href="#ReadWriteLock-读写锁-简介" class="headerlink" title="ReadWriteLock(读写锁)简介"></a>ReadWriteLock(读写锁)简介</h3><p>ReentrantLock是一种排他锁, ReadWriteLock的读锁是一种共享锁, 允许多个线程同时持有该锁。<br>ReadWriteLock是一个接口, 内部只定义了两个方法。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/02/20/readWriteLock/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
+        </div>
       
 
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
 
+      
+    </div>
+  </div>
 
 
           </div>
@@ -799,6 +429,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
 
         </div>
         
@@ -818,8 +454,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/head.jpg"
@@ -906,6 +551,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态代理的使用"><span class="nav-number">2.</span> <span class="nav-text">动态代理的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态代理的不足"><span class="nav-number">3.</span> <span class="nav-text">动态代理的不足</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1015,6 +676,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 

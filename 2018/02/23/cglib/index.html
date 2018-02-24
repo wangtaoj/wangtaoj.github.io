@@ -1,0 +1,767 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="cglib简介cglib是一个功能强大，高性能的代码生成包。动态生成的一个被代理类(委托类)的子类(代理类), 在子类采用方法拦截的技术拦截父类方法的调用。底层依赖于字节码处理框架ASM, 比使用java反射的JDK动态代理要快。">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cglib实现动态代理">
+<meta property="og:url" content="http://yoursite.com/2018/02/23/cglib/index.html">
+<meta property="og:site_name" content="Waston's Blog">
+<meta property="og:description" content="cglib简介cglib是一个功能强大，高性能的代码生成包。动态生成的一个被代理类(委托类)的子类(代理类), 在子类采用方法拦截的技术拦截父类方法的调用。底层依赖于字节码处理框架ASM, 比使用java反射的JDK动态代理要快。">
+<meta property="og:image" content="https://waston1997.github.io/images/myImages/201802241.png">
+<meta property="og:updated_time" content="2018-02-24T07:13:05.157Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cglib实现动态代理">
+<meta name="twitter:description" content="cglib简介cglib是一个功能强大，高性能的代码生成包。动态生成的一个被代理类(委托类)的子类(代理类), 在子类采用方法拦截的技术拦截父类方法的调用。底层依赖于字节码处理框架ASM, 比使用java反射的JDK动态代理要快。">
+<meta name="twitter:image" content="https://waston1997.github.io/images/myImages/201802241.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/23/cglib/"/>
+
+
+
+
+
+  <title> cglib实现动态代理 | Waston's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Waston's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/23/cglib/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="waston">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Waston's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                cglib实现动态代理
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-23T23:50:31+08:00">
+                2018-02-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2018/02/23/cglib/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="cglib简介"><a href="#cglib简介" class="headerlink" title="cglib简介"></a>cglib简介</h2><p>cglib是一个功能强大，高性能的代码生成包。动态生成的一个被代理类(委托类)的子类(代理类), 在子类采用方法拦截的技术拦截父类方法的调用。底层依赖于字节码处理框架ASM, 比使用java反射的JDK动态代理要快。</p>
+<a id="more"></a>
+<h2 id="cglib简单使用"><a href="#cglib简单使用" class="headerlink" title="cglib简单使用"></a>cglib简单使用</h2><p>主要了解下面几个组件:<br></p>
+<ol>
+<li>Callback接口, 回调接口 <br></li>
+<li>MethodInterceptor接口, 继承Callback接口, 拦截父类方法, 此处可以增加自己额外逻辑。<br></li>
+<li>CallbackFilter接口, 起过滤作用, 当有些方法不需要被代理, 可以使用它 <br></li>
+<li>Enhancer, 核心类, 用来设置生成代理一系列配置, 并且生成代理类。<br></li>
+</ol>
+<h3 id="使用MethodInterceptor"><a href="#使用MethodInterceptor" class="headerlink" title="使用MethodInterceptor"></a>使用MethodInterceptor</h3><p>使用: 同样模拟一个事务提交回滚的例子<br><br>被代理类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DBService</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"add operator"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"remove operator"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>实现MethodInterceptor拦截方法, 编写额外的逻辑<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">package</span> com.waston.cglib;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.cglib.proxy.MethodInterceptor;</div><div class="line"><span class="keyword">import</span> org.springframework.cglib.proxy.MethodProxy;</div><div class="line"><span class="keyword">import</span> java.lang.reflect.Method;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProxyInterceptor</span> <span class="keyword">implements</span> <span class="title">MethodInterceptor</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> obj 生成的代理类</div><div class="line">     * <span class="doctag">@param</span> method 被代理的方法</div><div class="line">     * <span class="doctag">@param</span> objects 被代理方法参数</div><div class="line">     * <span class="doctag">@param</span> methodProxy</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     * <span class="doctag">@throws</span> Throwable</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">intercept</span><span class="params">(Object obj, Method method, Object[] objects, MethodProxy methodProxy)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">        Object result = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            begin();</div><div class="line">            <span class="comment">//执行代理方法, 这两个方法稍微点区别</span></div><div class="line">            result = methodProxy.invokeSuper(obj, objects);</div><div class="line">            <span class="comment">//result = methodProxy.invoke(dbService, objects);</span></div><div class="line">            commit();</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            rollback();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">begin</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"开启事务!"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">commit</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"提交事务"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">rollback</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"出现异常, 回滚事务"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>测试类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">package</span> com.waston.test;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.waston.cglib.DBService;</div><div class="line"><span class="keyword">import</span> com.waston.cglib.ProxyFilter;</div><div class="line"><span class="keyword">import</span> com.waston.cglib.ProxyInterceptor;</div><div class="line"><span class="keyword">import</span> org.junit.Test;</div><div class="line"><span class="keyword">import</span> org.springframework.cglib.core.DebuggingClassWriter;</div><div class="line"><span class="keyword">import</span> org.springframework.cglib.proxy.Callback;</div><div class="line"><span class="keyword">import</span> org.springframework.cglib.proxy.Enhancer;</div><div class="line"><span class="keyword">import</span> org.springframework.cglib.proxy.NoOp;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@author</span> wangtao</div><div class="line"> * Created on 2018/2/23</div><div class="line"> **/</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CglibTest</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String OUTPUT_DIR = CglibTest.class.getResource(<span class="string">"/"</span>).getPath();</div><div class="line"></div><div class="line">    <span class="meta">@Before</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="comment">//设置将cglib生成的代理类字节码生成到指定位置</span></div><div class="line">        System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY, OUTPUT_DIR);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testProxy</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//生成代理类所需的参数</span></div><div class="line">        Enhancer enhancer = <span class="keyword">new</span> Enhancer();</div><div class="line">        enhancer.setSuperclass(DBService.class);</div><div class="line">        enhancer.setCallback(<span class="keyword">new</span> ProxyInterceptor());</div><div class="line">        <span class="comment">//生成代理</span></div><div class="line">        DBService dbService = (DBService)enhancer.create();</div><div class="line">		<span class="comment">//执行业务方法</span></div><div class="line">        System.out.println(dbService.getClass().getName());</div><div class="line">        dbService.add();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>执行结果:<br><br>com.waston.cglib.DBService$$EnhancerByCGLIB$$464c79c8<br>开启事务!<br>add operator<br>提交事务</p>
+<p>可以看到结果与JDK动态代理一样, 只是代理类为com.waston.cglib.DBService$$EnhancerByCGLIB$$f4ded129这样一个类。 可以通过System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY, OUTPUT_DIR)指定cglib生成的class文件位置, 这句的执行需要在创建代理类之前, 一般放在static代码快中, 或者junit的@Before中.<br></p>
+<p>通过反编译源码看到方法的关键代码如下:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DBService</span>$$<span class="title">EnhancerByCGLIB</span>$$464<span class="title">c79c8</span> <span class="keyword">extends</span> <span class="title">DBService</span> <span class="keyword">implements</span> <span class="title">Factory</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="keyword">final</span> <span class="keyword">void</span> CGLIB$add$<span class="number">0</span>() &#123;</div><div class="line">       	<span class="keyword">super</span>.add();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">()</span> </span>&#123;</div><div class="line">        MethodInterceptor var10000 = <span class="keyword">this</span>.CGLIB$CALLBACK_0;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.CGLIB$CALLBACK_0 == <span class="keyword">null</span>) &#123;</div><div class="line">            CGLIB$BIND_CALLBACKS(<span class="keyword">this</span>);</div><div class="line">            var10000 = <span class="keyword">this</span>.CGLIB$CALLBACK_0;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (var10000 != <span class="keyword">null</span>) &#123;</div><div class="line">            var10000.intercept(<span class="keyword">this</span>, CGLIB$add$<span class="number">0</span>$Method, CGLIB$emptyArgs, CGLIB$add$<span class="number">0</span>$Proxy);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">super</span>.add();</div><div class="line">        &#125;</div><div class="line">   	&#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>通过部分关键源码可以看到代理类会继承被代理类, 并且会为每一个被代理的方法生成两个方法<br><br>CGLIB$add$0: 直接调用父类(被代理类)的方法<br>add: 继承自父类, 子类会重写, 主要逻辑是MethodInterceptor对象是否为空, 不为空调用intercept方法, 否则直接调用父类的方法。</p>
+<p>再说说methodProxy的两个方法invokeSuper, invoke方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">invokeSuper</span><span class="params">(Object obj, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">       <span class="keyword">try</span> &#123;</div><div class="line">           <span class="keyword">this</span>.init();</div><div class="line">           MethodProxy.FastClassInfo fci = <span class="keyword">this</span>.fastClassInfo;</div><div class="line">           <span class="keyword">return</span> fci.f2.invoke(fci.i2, obj, args);</div><div class="line">       &#125; <span class="keyword">catch</span> (InvocationTargetException var4) &#123;</div><div class="line">           <span class="keyword">throw</span> var4.getTargetException();</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object obj, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">       <span class="keyword">try</span> &#123;</div><div class="line">           <span class="keyword">this</span>.init();</div><div class="line">           MethodProxy.FastClassInfo fci = <span class="keyword">this</span>.fastClassInfo;</div><div class="line">           <span class="keyword">return</span> fci.f1.invoke(fci.i1, obj, args);</div><div class="line">       &#125; <span class="keyword">catch</span> (InvocationTargetException var4) &#123;</div><div class="line">           <span class="keyword">throw</span> var4.getTargetException();</div><div class="line">       &#125; <span class="keyword">catch</span> (IllegalArgumentException var5) &#123;</div><div class="line">           <span class="keyword">if</span> (<span class="keyword">this</span>.fastClassInfo.i1 &lt; <span class="number">0</span>) &#123;</div><div class="line">               <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Protected method: "</span> + <span class="keyword">this</span>.sig1);</div><div class="line">           &#125; <span class="keyword">else</span> &#123;</div><div class="line">               <span class="keyword">throw</span> var5;</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">FastClassInfo</span> </span>&#123;</div><div class="line">	<span class="comment">//代表被代理类</span></div><div class="line">       FastClass f1;</div><div class="line">	<span class="comment">//代表代理类</span></div><div class="line">       FastClass f2;</div><div class="line">       <span class="keyword">int</span> i1;</div><div class="line">       <span class="keyword">int</span> i2;</div><div class="line"></div><div class="line">       <span class="function"><span class="keyword">private</span> <span class="title">FastClassInfo</span><span class="params">()</span> </span>&#123;</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>要想明白invokeSuper, invoke两个方法, 必须要知道FastClassInfo的4个属性f1, f2, i1, i2到底是什么东西, 可以通过idea调试观察下, 当invokeSuper, invoke方法执行inthis.init()后, 就被初始化了。<br><img src="https://waston1997.github.io/images/myImages/201802241.png" alt=""></p>
+<p><strong>f1其实代表的是被代理类DbService, f2代表的是生成的代理类, 那么i1指示的是DbService的add()方法, 而i2指示的是代理类生成的CGLIB$add$0方法。一般说来调用invokeSuper, invoke这两个方法得到的结果是一样的, 通常也会选用invokeSuper方法, 因为不需要传被代理类对象进来, 所以更简洁点。</strong><br></p>
+<p>两者使用区别:<br></p>
+<ol>
+<li>调用对象不同, 一个是被代理类对象, 另一个是代理对象</li>
+<li>根据第一个不同就可以得到下面这个区别, 即多态。试想在add()方法中又调用了remove()方法。因为调用者分为被代理类对象, 另一个是代理对象, 那么执行invokeSuper在执行add()方法中, 继续调用remove会发生多态现象, 那么就会拦截两次。<br><br>得到的结果就是下面这样:<br><br>invokeSuper:<br>开启事务!<br>add operator<br>开启事务!<br>remove operator<br>提交事务<br>提交事务</li>
+</ol>
+<p>invoke:<br>开启事务!<br>add operator<br>remove operator<br>提交事务</p>
+<p>总结: invoke方法则与JDK动态代理一样result = methodProxy.invoke(dbService, objects)与<br>result = method.invoke(dbService, objects)等价的, invoke, invokeSuper虽然这是个很小的点, 但是在事务嵌套中可能出现意想不到的情况。</p>
+<h3 id="使用CallbackFilter"><a href="#使用CallbackFilter" class="headerlink" title="使用CallbackFilter"></a>使用CallbackFilter</h3><p>有时候被代理类的某个方法不需要被代理, 这时候我们需要过滤这个方法, 此时就轮到CallbackFilter登场了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProxyFilter</span> <span class="keyword">implements</span> <span class="title">CallbackFilter</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 过滤方法, 返回的是enhancer.setCallbacks()中参数数组的索引</div><div class="line">     * 从0开始, NoOp.INSTANCE是一个Callback实例, 不会拦截被代理的方法</div><div class="line">     * <span class="doctag">@param</span> method 被代理的方法</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">accept</span><span class="params">(Method method)</span> </span>&#123;</div><div class="line">        String name = method.getName();</div><div class="line">        <span class="keyword">if</span>(!Objects.equals(name, <span class="string">"remove"</span>))</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CglibTest</span> </span>&#123;</div><div class="line"></div><div class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String OUTPUT_DIR = CglibTest.class.getResource(<span class="string">"/"</span>).getPath();</div><div class="line"></div><div class="line">   <span class="meta">@Before</span></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;</div><div class="line">       <span class="comment">//设置将cglib生成的代理类字节码生成到指定位置</span></div><div class="line">       System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY, OUTPUT_DIR);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testProxyFilter</span><span class="params">()</span> </span>&#123;</div><div class="line">        Enhancer enhancer = <span class="keyword">new</span> Enhancer();</div><div class="line">        enhancer.setSuperclass(DBService.class);</div><div class="line">        enhancer.setCallbackFilter(<span class="keyword">new</span> ProxyFilter());</div><div class="line">		<span class="comment">//设置callbacks</span></div><div class="line">        enhancer.setCallbacks(<span class="keyword">new</span> Callback[]&#123;<span class="keyword">new</span> ProxyInterceptor(), NoOp.INSTANCE&#125;);</div><div class="line">        DBService dbService = (DBService)enhancer.create();</div><div class="line">        System.out.println(dbService.getClass().getName());</div><div class="line">        dbService.add();</div><div class="line">        System.out.println(<span class="string">"-----------------------------"</span>);</div><div class="line">        dbService.remove();</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行结果: <br><br>com.waston.cglib.DBService$$EnhancerByCGLIB$$e6c28cdf<br>开启事务!<br>add operator<br>提交事务<br>———–我是分隔线————-<br>remove operator</p>
+<p>说明:<br><br>accept()返回值与nhancer.setCallbacks()息息相关, 这里如果被代理的方法是remove方法, 那么与remove方法有关的Callback就是数组中索引为1的callback实例了。其他方法的callback实例为索引为0的对象。NoOp.INSTANCE是一个NoOp匿名对象, NoOp接口继承自Callback。这个对象什么也不做, 起到过滤作用。搜索字节码文件, 可以看到remove方法根本就没有被重写过, 只是继承下来而已。可见如果要重写该方法, 必须要与MethodInterceptor相关联。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>JDK动态代理与Cglib动态代理都是实现动态代理的一种方式, JDK动态代理要求被代理类必须实现接口, 而cglib动态代理必须要求被代理类能够被继承, 方法能够被重写, 也就是说不能被final修饰。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/22/proxy/" rel="prev" title="细说JDK动态代理">
+                细说JDK动态代理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/head.jpg"
+               alt="waston" />
+          <p class="site-author-name" itemprop="name">waston</p>
+           
+              <p class="site-description motion-element" itemprop="description">学习笔记总结</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/waston1997" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/wthhhhh20" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/waston1997" title="waston" target="_blank">waston</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#cglib简介"><span class="nav-number">1.</span> <span class="nav-text">cglib简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cglib简单使用"><span class="nav-number">2.</span> <span class="nav-text">cglib简单使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用MethodInterceptor"><span class="nav-number">2.1.</span> <span class="nav-text">使用MethodInterceptor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用CallbackFilter"><span class="nav-number">2.2.</span> <span class="nav-text">使用CallbackFilter</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">waston</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "b89f45f0b81d44128699f928516438b9",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

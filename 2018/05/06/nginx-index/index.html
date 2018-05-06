@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="mysql," />
+  <meta name="keywords" content="nginx," />
 
 
 
@@ -93,17 +93,17 @@
 
 
 
-<meta name="description" content="mysql的表锁和行锁表锁(table lock)表锁是mysql中最基本的所策略, 开销最小。会锁定整张表, 一个用户对表进行写操作前需要先获取写锁, 这会阻塞其它用户对该表的读写操作。在没有写锁的情况下, 用户可以获取读锁, 读锁之间是不互斥的, 也就是说多个用户可以同时加读锁, 但是不能加写锁。总结下来也就是写写互斥, 写读互斥, 读写互斥, 读读共享。因此读锁也称共享锁, 写锁称为排它锁。">
-<meta name="keywords" content="mysql">
+<meta name="description" content="环境准备准备一个域名test.example.com， 并且在hosts文件里配置好E:/Servers/nginx-1.10.3/html/index.htmlE:/index.htmlE:/Servers/nginx-1.10.3下没有index.html文件 location匹配规则顺序 精确匹配 (=) 前缀匹配 (^~) 正则表达式 (~ or ~) ~不区分大小写 /(根目录匹配, 匹">
+<meta name="keywords" content="nginx">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mysql事务学习笔记">
-<meta property="og:url" content="http://yoursite.com/2018/02/15/mysqlTranscation/index.html">
+<meta property="og:title" content="nginx 使用index配置的疑惑">
+<meta property="og:url" content="http://yoursite.com/2018/05/06/nginx-index/index.html">
 <meta property="og:site_name" content="Waston's Blog">
-<meta property="og:description" content="mysql的表锁和行锁表锁(table lock)表锁是mysql中最基本的所策略, 开销最小。会锁定整张表, 一个用户对表进行写操作前需要先获取写锁, 这会阻塞其它用户对该表的读写操作。在没有写锁的情况下, 用户可以获取读锁, 读锁之间是不互斥的, 也就是说多个用户可以同时加读锁, 但是不能加写锁。总结下来也就是写写互斥, 写读互斥, 读写互斥, 读读共享。因此读锁也称共享锁, 写锁称为排它锁。">
-<meta property="og:updated_time" content="2018-02-17T16:46:41.059Z">
+<meta property="og:description" content="环境准备准备一个域名test.example.com， 并且在hosts文件里配置好E:/Servers/nginx-1.10.3/html/index.htmlE:/index.htmlE:/Servers/nginx-1.10.3下没有index.html文件 location匹配规则顺序 精确匹配 (=) 前缀匹配 (^~) 正则表达式 (~ or ~) ~不区分大小写 /(根目录匹配, 匹">
+<meta property="og:updated_time" content="2018-05-06T10:59:17.577Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mysql事务学习笔记">
-<meta name="twitter:description" content="mysql的表锁和行锁表锁(table lock)表锁是mysql中最基本的所策略, 开销最小。会锁定整张表, 一个用户对表进行写操作前需要先获取写锁, 这会阻塞其它用户对该表的读写操作。在没有写锁的情况下, 用户可以获取读锁, 读锁之间是不互斥的, 也就是说多个用户可以同时加读锁, 但是不能加写锁。总结下来也就是写写互斥, 写读互斥, 读写互斥, 读读共享。因此读锁也称共享锁, 写锁称为排它锁。">
+<meta name="twitter:title" content="nginx 使用index配置的疑惑">
+<meta name="twitter:description" content="环境准备准备一个域名test.example.com， 并且在hosts文件里配置好E:/Servers/nginx-1.10.3/html/index.htmlE:/index.htmlE:/Servers/nginx-1.10.3下没有index.html文件 location匹配规则顺序 精确匹配 (=) 前缀匹配 (^~) 正则表达式 (~ or ~) ~不区分大小写 /(根目录匹配, 匹">
 
 
 
@@ -131,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/02/15/mysqlTranscation/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/06/nginx-index/"/>
 
 
 
 
 
-  <title> mysql事务学习笔记 | Waston's Blog </title>
+  <title> nginx 使用index配置的疑惑 | Waston's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -256,7 +256,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/15/mysqlTranscation/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/06/nginx-index/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="waston">
@@ -277,7 +277,7 @@
             
             
               
-                mysql事务学习笔记
+                nginx 使用index配置的疑惑
               
             
           </h1>
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-15T21:48:29+08:00">
-                2018-02-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-06T18:15:33+08:00">
+                2018-05-06
               </time>
             
 
@@ -311,7 +311,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2018/02/15/mysqlTranscation/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2018/05/06/nginx-index/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -338,72 +338,23 @@
       
 
       
-        <h2 id="mysql的表锁和行锁"><a href="#mysql的表锁和行锁" class="headerlink" title="mysql的表锁和行锁"></a>mysql的表锁和行锁</h2><h3 id="表锁-table-lock"><a href="#表锁-table-lock" class="headerlink" title="表锁(table lock)"></a>表锁(table lock)</h3><p>表锁是mysql中最基本的所策略, 开销最小。会锁定整张表, 一个用户对表进行写操作前需要先获取写锁, 这会阻塞其它用户对该表的读写操作。在没有写锁的情况下, 用户可以获取读锁, 读锁之间是不互斥的, 也就是说多个用户可以同时加读锁, 但是不能加写锁。总结下来也就是写写互斥, 写读互斥, 读写互斥, 读读共享。因此读锁也称共享锁, 写锁称为排它锁。</p>
-<a id="more"></a>
-<h3 id="行锁-row-lock"><a href="#行锁-row-lock" class="headerlink" title="行锁(row lock)"></a>行锁(row lock)</h3><p>行锁相对于表锁, 锁粒度更小, 因此可以更大的程度支持并发处理。行锁只在存储引擎层(如InnoDB引擎)实现, 而mysql服务层没有必要实现。行锁只是锁上那些被访问行记录而不是整个表。当然行锁也有读锁和写锁</p>
-<h3 id="锁定机制"><a href="#锁定机制" class="headerlink" title="锁定机制"></a>锁定机制</h3><ol>
-<li>表锁不需要用户自己干预, 由mysql自己处理</li>
-<li>行锁分为隐式锁定和显示锁定, 隐式锁定时InnoDB采用的两阶段锁定协议, 在事务执行过程中随时都可以锁定, 锁只有在commit或者rollback时才会释放, 并且所有的锁是同一时刻被释放。加锁InnoDB会根据设置的隔离级别在需要的时候加锁。</li>
-<li>InnoDB也支持特定的语句进行显示锁定, 使用方式如下: <br><br>共享锁: <strong>SELECT … LOCK IN SHARE MODE</strong> <br><br>排它锁: <strong>SELECT … FOR UPDATE</strong></li>
+        <h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>准备一个域名test.example.com， 并且在hosts文件里配置好<br>E:/Servers/nginx-1.10.3/html/index.html<br>E:/index.html<br>E:/Servers/nginx-1.10.3下没有index.html文件</p>
+<h3 id="location匹配规则顺序"><a href="#location匹配规则顺序" class="headerlink" title="location匹配规则顺序"></a>location匹配规则顺序</h3><ol>
+<li>精确匹配 (=)</li>
+<li>前缀匹配 (^~)</li>
+<li>正则表达式 (~ or ~<em>) ~</em>不区分大小写</li>
+<li>/(根目录匹配, 匹配所有, 因此优先级最低)</li>
 </ol>
-<h2 id="mysql事务"><a href="#mysql事务" class="headerlink" title="mysql事务"></a>mysql事务</h2><h3 id="事务的ACID概念"><a href="#事务的ACID概念" class="headerlink" title="事务的ACID概念"></a>事务的ACID概念</h3><ol>
-<li>原子性(atomicity): 一个事务是不可分割的最小单元, 整个事务的操作要么全部执行成功, 要么全部失败。</li>
-<li>一致性(consistency): 数据库总是从一个一致性状态转移到另外一个一致性状态。</li>
-<li>隔离性(isolation): 讨论隔离级别时再细说</li>
-<li>持久性(durability): 一旦事务提交, 其做的修改就会永久保存到数据库中。</li>
-</ol>
-<h3 id="隔离级别"><a href="#隔离级别" class="headerlink" title="隔离级别"></a>隔离级别</h3><ol>
-<li>未提交读(READ UNCOMMITTED): 也就是说当前事务所做的修改即使没有提交, 对于其它事务也是可见的。会产生脏读</li>
-<li>提交读(READ COMMITTED): Oracle数据库默认的隔离级别, 一个事务从开始到提交之前, 在这个过程所做的修改对于其它事务是不可见的。这个级别有时候也叫做不可重复读, 因为在一个事务中两次执行同样的查询可能会得到不一样的结果。可以解决脏读</li>
-<li>可重复读(REPEATABLE READ)： mysql默认的隔离级别, 可以解决不可重复读, 保证在一个事务中两次一样的查询得到的结果相同。可是还是会出现幻读, 但是InnoDB引擎通过多版本并发控制(MVCC)解决了幻读问题。</li>
-<li>可串行化(Serializable): 最高的隔离级别, 最安全的, 并发能力最低, 使得事务串行操作, 每次读写都需要获得表级共享锁以及排它锁，读写相互都会阻塞。<br></li>
-</ol>
-<p>注:<br></p>
-<ol>
-<li>脏读(Dirty Read): 事务可以读取未提交的数据称为脏读。<br></li>
-<li>不可重复读(NonRepeatable Read): 在一个事务中两次执行同样的查询得到不一样的结果称之为不可重复读。<br></li>
-<li>幻读(Phantom Read): 幻读指当前事务在读取某个范围(比如一个表中)的记录时, 另外一个事务又在这个范围里插入新的记录, 当当前事务再次读取时多出了记录。<br><br><strong>不可重复读与幻读区别: 不可重复读与幻读很相似, 只是不可重复读针对update,delete, 而幻读针对insert。</strong></li>
-</ol>
-<p>总结:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">隔离级别</th>
-<th style="text-align:center">脏读</th>
-<th style="text-align:center">不可重复读</th>
-<th style="text-align:center">幻读</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">未提交读</td>
-<td style="text-align:center">yes</td>
-<td style="text-align:center">yes</td>
-<td style="text-align:center">yes</td>
-</tr>
-<tr>
-<td style="text-align:center">提交读</td>
-<td style="text-align:center">no</td>
-<td style="text-align:center">yes</td>
-<td style="text-align:center">yes</td>
-</tr>
-<tr>
-<td style="text-align:center">可重复读</td>
-<td style="text-align:center">no</td>
-<td style="text-align:center">no</td>
-<td style="text-align:center">yes</td>
-</tr>
-<tr>
-<td style="text-align:center">串行化</td>
-<td style="text-align:center">no</td>
-<td style="text-align:center">no</td>
-<td style="text-align:center">no</td>
-</tr>
-</tbody>
-</table>
-<p>通常说来在可重复读(REPEATABLE READ)隔离级别下, 是会出现幻读情况的, 但是mysql在REPEATABLE READ模式下可以解决幻读, 因为InnoDB引擎使用MVCC解决了幻读。</p>
-<h3 id="InnoDB引擎多版本并发控制原理-MVCC"><a href="#InnoDB引擎多版本并发控制原理-MVCC" class="headerlink" title="InnoDB引擎多版本并发控制原理(MVCC)"></a>InnoDB引擎多版本并发控制原理(MVCC)</h3><p>MVVC是通过每行在每行记录后面保存两个隐藏的列来实现的, 一个列保存了行的创建时间, 另一个保存行的过期时间(删除时间), 当然存储的并不是实际的时间值, 而是系统版本号。每开始一个新的事务, 系统版本号会自动递增。 事务开始时刻的版本号作为当前事务的版本号。<br><br>具体操作:<br><br>select：只查找&lt;=当前事务版本号的数据记录 <br><br>insert: 为新增的记录保存一个当前事务的系统版本号<br><br>delete: 为删除的记录保存一个当前事务的系统版本号作为行删除标识<br><br>update: 为新增的记录保存一个当前事务的系统版本号, 同时保存当前系统版本号到原来的行作为行删除标识。<br></p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><strong>高性能mysql</strong></p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><h4 id="测试一"><a href="#测试一" class="headerlink" title="测试一"></a>测试一</h4><p>config配置如下:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">server &#123; </div><div class="line">    listen 80;</div><div class="line">    autoindex off; </div><div class="line">    server_name test.example.com; </div><div class="line">    access_log E:/Servers/nginx-1.10.3/logs/access.log combined; </div><div class="line"></div><div class="line">    location =/ &#123;</div><div class="line">        index index.html;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>浏览器输入: test.example.com<br>将会访问E:/Servers/nginx-1.10.3/html/index.html<br>结论: 如果没有指定root, 那么root的值为nginx根目录下/html/</p>
+<h4 id="测试二"><a href="#测试二" class="headerlink" title="测试二"></a>测试二</h4><p>config配置如下:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">server &#123; </div><div class="line">    listen 80;</div><div class="line">    autoindex off; </div><div class="line">    server_name test.example.com; </div><div class="line">    access_log E:/Servers/nginx-1.10.3/logs/access.log combined; </div><div class="line"></div><div class="line">	#location a</div><div class="line">    location =/ &#123;</div><div class="line">        index index.html;</div><div class="line">    &#125;</div><div class="line">	#location b</div><div class="line">	location / &#123;</div><div class="line">		root E:/;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>浏览器输入: test.example.com<br>将会访问E:/index.html<br>原因如下: 首先将由location a处理到, 然后从html目录下寻找index.html, 找到后, 内部重定向<br>相当于访问test.example.com/index.html, 于是被location b规则处理。最后就访问了E:/index.html。</p>
+<h4 id="测试三"><a href="#测试三" class="headerlink" title="测试三"></a>测试三</h4><p>config配置如下:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">server &#123; </div><div class="line">    listen 80;</div><div class="line">    autoindex off; </div><div class="line">    server_name test.example.com; </div><div class="line">    access_log E:/Servers/nginx-1.10.3/logs/access.log combined; </div><div class="line"></div><div class="line">	#location a</div><div class="line">    location =/ &#123;</div><div class="line">		root E:/Servers/nginx-1.10.3;</div><div class="line">        index index.html;</div><div class="line">    &#125;</div><div class="line">	#location b</div><div class="line">	location / &#123;</div><div class="line">		root E:/;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>浏览器输入: test.example.com<br>出现403 Forbidden<br>原因如下: 首先将由location a处理到, 然后从E:/Servers/nginx-1.10.3目录下寻找index.html<br>由于该目录下没有index.html文件, 于是nginx会打开这个目录, 但是autoindex off禁止了目录访问,所以出现了该现象,如果autoindex on, 将会访问这个目录。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><strong>1. root的默认目录是nginx安装目录的html文件夹</strong><br><strong>2. 如果根据规则查找到该文件, 并且没有别的规则来处理test.example.com/index.html的话, 将直接访问该文件, 如果有别的规则处理, 则交由该规则处理。如果查找不到该文件, 则会打开root指定的目录</strong></p>
 
       
     </div>
@@ -433,7 +384,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/mysql/" rel="tag"># mysql</a>
+            <a href="/tags/nginx/" rel="tag"># nginx</a>
           
         </div>
       
@@ -446,18 +397,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/17/blq-linked/" rel="next" title="Java阻塞队列之LinkedBlockingQueue">
-                <i class="fa fa-chevron-left"></i> Java阻塞队列之LinkedBlockingQueue
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/02/14/mysqlDateFun/" rel="prev" title="mysql日期函数使用总结">
-                mysql日期函数使用总结 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/02/25/spring-transaction/" rel="prev" title="spring-transaction">
+                spring-transaction <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -620,7 +567,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql的表锁和行锁"><span class="nav-number">1.</span> <span class="nav-text">mysql的表锁和行锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#表锁-table-lock"><span class="nav-number">1.1.</span> <span class="nav-text">表锁(table lock)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#行锁-row-lock"><span class="nav-number">1.2.</span> <span class="nav-text">行锁(row lock)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#锁定机制"><span class="nav-number">1.3.</span> <span class="nav-text">锁定机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql事务"><span class="nav-number">2.</span> <span class="nav-text">mysql事务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#事务的ACID概念"><span class="nav-number">2.1.</span> <span class="nav-text">事务的ACID概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隔离级别"><span class="nav-number">2.2.</span> <span class="nav-text">隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB引擎多版本并发控制原理-MVCC"><span class="nav-number">2.3.</span> <span class="nav-text">InnoDB引擎多版本并发控制原理(MVCC)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">2.4.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境准备"><span class="nav-number">1.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#location匹配规则顺序"><span class="nav-number">2.</span> <span class="nav-text">location匹配规则顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试"><span class="nav-number">3.</span> <span class="nav-text">测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#测试一"><span class="nav-number">3.1.</span> <span class="nav-text">测试一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试二"><span class="nav-number">3.2.</span> <span class="nav-text">测试二</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试三"><span class="nav-number">3.3.</span> <span class="nav-text">测试三</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>

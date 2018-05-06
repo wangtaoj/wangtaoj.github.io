@@ -101,7 +101,7 @@
 <meta property="og:site_name" content="Waston's Blog">
 <meta property="og:description" content="cglib简介cglib是一个功能强大，高性能的代码生成包。动态生成的一个被代理类(委托类)的子类(代理类), 在子类采用方法拦截的技术拦截父类方法的调用。底层依赖于字节码处理框架ASM, 比使用java反射的JDK动态代理要快。">
 <meta property="og:image" content="https://waston1997.github.io/images/myImages/201802241.png">
-<meta property="og:updated_time" content="2018-02-24T07:13:05.157Z">
+<meta property="og:updated_time" content="2018-02-24T07:20:28.620Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cglib实现动态代理">
 <meta name="twitter:description" content="cglib简介cglib是一个功能强大，高性能的代码生成包。动态生成的一个被代理类(委托类)的子类(代理类), 在子类采用方法拦截的技术拦截父类方法的调用。底层依赖于字节码处理框架ASM, 比使用java反射的JDK动态代理要快。">
@@ -359,12 +359,11 @@
 <p>再说说methodProxy的两个方法invokeSuper, invoke方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">invokeSuper</span><span class="params">(Object obj, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">       <span class="keyword">try</span> &#123;</div><div class="line">           <span class="keyword">this</span>.init();</div><div class="line">           MethodProxy.FastClassInfo fci = <span class="keyword">this</span>.fastClassInfo;</div><div class="line">           <span class="keyword">return</span> fci.f2.invoke(fci.i2, obj, args);</div><div class="line">       &#125; <span class="keyword">catch</span> (InvocationTargetException var4) &#123;</div><div class="line">           <span class="keyword">throw</span> var4.getTargetException();</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object obj, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">       <span class="keyword">try</span> &#123;</div><div class="line">           <span class="keyword">this</span>.init();</div><div class="line">           MethodProxy.FastClassInfo fci = <span class="keyword">this</span>.fastClassInfo;</div><div class="line">           <span class="keyword">return</span> fci.f1.invoke(fci.i1, obj, args);</div><div class="line">       &#125; <span class="keyword">catch</span> (InvocationTargetException var4) &#123;</div><div class="line">           <span class="keyword">throw</span> var4.getTargetException();</div><div class="line">       &#125; <span class="keyword">catch</span> (IllegalArgumentException var5) &#123;</div><div class="line">           <span class="keyword">if</span> (<span class="keyword">this</span>.fastClassInfo.i1 &lt; <span class="number">0</span>) &#123;</div><div class="line">               <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Protected method: "</span> + <span class="keyword">this</span>.sig1);</div><div class="line">           &#125; <span class="keyword">else</span> &#123;</div><div class="line">               <span class="keyword">throw</span> var5;</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">FastClassInfo</span> </span>&#123;</div><div class="line">	<span class="comment">//代表被代理类</span></div><div class="line">       FastClass f1;</div><div class="line">	<span class="comment">//代表代理类</span></div><div class="line">       FastClass f2;</div><div class="line">       <span class="keyword">int</span> i1;</div><div class="line">       <span class="keyword">int</span> i2;</div><div class="line"></div><div class="line">       <span class="function"><span class="keyword">private</span> <span class="title">FastClassInfo</span><span class="params">()</span> </span>&#123;</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
 <p>要想明白invokeSuper, invoke两个方法, 必须要知道FastClassInfo的4个属性f1, f2, i1, i2到底是什么东西, 可以通过idea调试观察下, 当invokeSuper, invoke方法执行inthis.init()后, 就被初始化了。<br><img src="https://waston1997.github.io/images/myImages/201802241.png" alt=""></p>
 <p><strong>f1其实代表的是被代理类DbService, f2代表的是生成的代理类, 那么i1指示的是DbService的add()方法, 而i2指示的是代理类生成的CGLIB$add$0方法。一般说来调用invokeSuper, invoke这两个方法得到的结果是一样的, 通常也会选用invokeSuper方法, 因为不需要传被代理类对象进来, 所以更简洁点。</strong><br></p>
-<p>两者使用区别:<br></p>
+<p>两者使用区别:</p>
 <ol>
 <li>调用对象不同, 一个是被代理类对象, 另一个是代理对象</li>
-<li>根据第一个不同就可以得到下面这个区别, 即多态。试想在add()方法中又调用了remove()方法。因为调用者分为被代理类对象, 另一个是代理对象, 那么执行invokeSuper在执行add()方法中, 继续调用remove会发生多态现象, 那么就会拦截两次。<br><br>得到的结果就是下面这样:<br><br>invokeSuper:<br>开启事务!<br>add operator<br>开启事务!<br>remove operator<br>提交事务<br>提交事务</li>
+<li>根据第一个不同就可以得到下面这个区别, 即多态。试想在add()方法中又调用了remove()方法。因为调用者分为被代理类对象, 另一个是代理对象, 那么执行invokeSuper在执行add()方法中, 继续调用remove会发生多态现象, 那么就会拦截两次。<br>得到的结果就是下面这样:<br>invokeSuper:<br>开启事务!<br>add operator<br>开启事务!<br>remove operator<br>提交事务<br>提交事务<br>invoke:<br>开启事务!<br>add operator<br>remove operator<br>提交事务</li>
 </ol>
-<p>invoke:<br>开启事务!<br>add operator<br>remove operator<br>提交事务</p>
 <p>总结: invoke方法则与JDK动态代理一样result = methodProxy.invoke(dbService, objects)与<br>result = method.invoke(dbService, objects)等价的, invoke, invokeSuper虽然这是个很小的点, 但是在事务嵌套中可能出现意想不到的情况。</p>
 <h3 id="使用CallbackFilter"><a href="#使用CallbackFilter" class="headerlink" title="使用CallbackFilter"></a>使用CallbackFilter</h3><p>有时候被代理类的某个方法不需要被代理, 这时候我们需要过滤这个方法, 此时就轮到CallbackFilter登场了。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProxyFilter</span> <span class="keyword">implements</span> <span class="title">CallbackFilter</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 过滤方法, 返回的是enhancer.setCallbacks()中参数数组的索引</div><div class="line">     * 从0开始, NoOp.INSTANCE是一个Callback实例, 不会拦截被代理的方法</div><div class="line">     * <span class="doctag">@param</span> method 被代理的方法</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">accept</span><span class="params">(Method method)</span> </span>&#123;</div><div class="line">        String name = method.getName();</div><div class="line">        <span class="keyword">if</span>(!Objects.equals(name, <span class="string">"remove"</span>))</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -413,6 +412,10 @@
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/25/spring-transaction/" rel="next" title="spring-transaction">
+                <i class="fa fa-chevron-left"></i> spring-transaction
+              </a>
             
           </div>
 
@@ -502,7 +505,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -515,7 +518,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
